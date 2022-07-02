@@ -25,21 +25,27 @@ $res = mysqli_query($db_con,$query1);
 $row = mysqli_fetch_array($res);
 
 
-    if($pic_type=='image/png' or $pic_type=='image/jpg' or $pic_type=='image/jpeg'){
-        if(move_uploaded_file($pic_tmp, 'assets/stu_pic/'.$pic_name)){
+    if($pic_type=='image/png' or $pic_type=='image/jpg' or $pic_type=='image/jpeg')
+    {
+        if(move_uploaded_file($pic_tmp, 'assets/stu_pic/'.$pic_name))
+        {
         
             $query="insert into tbl_student_details (fname, lname, mobile, email, gender, dob, pic,fee, present_address, permanent_address, enroll_date) values ('$fname','$lname','$mobile','$email','$gender','$dob', '$pic_name',$fee, '$present_address', '$permanent_address', '$enroll_date')";
+        
             
-            if(mysqli_query($db_con,$query)){
+            if(mysqli_query($db_con,$query))
+            {
                 header("location:students.php?msg=success");
             }else{
                 header("location:add-student.php?msg=queryError");    
             }
         
-        }else{
+        }
+        else{
             header("location:add-student.php?msg=imgError");
         }
-    }else{
+    }
+    else{
         header("location:add-student.php?msg=typeError");
     }
 

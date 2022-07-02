@@ -228,8 +228,9 @@
                   <span class="menu-arrow"></span
                 ></a>
                 <ul>
-                  <li><a href="add-attendance.php">Add Attendance</a></li>
-                  <li><a href="attendance.php">Mark Attendance</a></li>
+                  <li><a href="mark-attendance.php">Mark Attendance</a></li>
+                  <li><a href="entry-attendance.php">Entry Attendance</a></li>
+                  <li><a href="exit-attendance.php">Exit Attendance</a></li>
                   <li><a href="view-attendance.php">View Attendance</a></li>
                 </ul>
               </li>

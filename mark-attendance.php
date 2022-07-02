@@ -48,56 +48,56 @@ $res = mysqli_query($db_con,$query);
 <div class="page-wrapper">
             <div class="content container-fluid">
 
-            <form method="post" action="attendance-code.php">
+            
                 <div class="page-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="page-title">Add Attendance</h3>
+                            <h3 class="page-title">Mark Attendance</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index-2.php">Student's /</a></li>
-                                <li class="active">Add Attendance</li>
+                                <li class="breadcrumb-item"><a href="index-2.php">Student /</a></li>
+                                <li class="active">Mark Attendance</li>
                             </ul>
                         </div>
-                        <div class="col-auto text-end float-end ms-auto">
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo date("d/m/Y") ?>" style="background: transparent;border:none"></a>
-                        </div>
+                        
                     </div>
                 </div>
 
 
             
-                <div class="row">
-                    <div class="col-sm-6">
+            <form method="post" action="mark-attendance-code.php">
+                <div class="row mt-5">
+                    <div class="col-sm-7">
                         <div class="card card-table">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                        <table class="table table-hover table-center mb-0 datatable">
-                                            <thead>
+                                    <table class="table table-hover table-center mb-0 datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                                 <tr>
-                                                    <th>Phone No.</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>                                                
-                                                    <tr>
-                                                        <td><input type="text" name="get_phone" autofocus/></td>
-                                                        <td><button type="submit" class="btn btn-primary">
-                                                            Submit
+                                                    <td>
+                                                        <div class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo strftime('%c'); ?>" readonly style="background: transparent;border:none"></div>
+                                                    </td>
+                                                    <td>
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-primary">
+                                                        Mark
                                                         </button>
-                                                        </td>
-                                                    </tr>                                         
-                                            </tbody>
-                                            
-                                        </table>
-                                        
+                                                    </div>
+                                                    </td>
+
+                                                </tr>                          
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                   
                 </div>
-
-               
             </form>
             </div>
 
@@ -109,6 +109,9 @@ $res = mysqli_query($db_con,$query);
 
     
     </div>
+
+    
+
 
     <script src="assets/js/jquery-3.6.0.min.js"></script>
 
