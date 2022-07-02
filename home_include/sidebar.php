@@ -212,25 +212,25 @@
               </li>
               <li class="submenu">
                 <a href="#"
-                  ><i class="fas fa-building"></i> <span> Departments</span>
+                  ><i class="fas fa-building"></i> <span> Fee Management</span>
                   <span class="menu-arrow"></span
                 ></a>
 
                 <ul>
-                  <li><a href="departments.php">Department List</a></li>
+                  <li><a href="fee_list.php">Student's List</a></li>
                   <li><a href="add-department.php">Department Add</a></li>
                   <li><a href="edit-department.php">Department Edit</a></li>
                 </ul>
               </li>
               <li class="submenu">
                 <a href="#"
-                  ><i class="fas fa-book-reader"></i> <span> Subjects</span>
+                  ><i class="fas fa-book-reader"></i> <span> Attendance Management</span>
                   <span class="menu-arrow"></span
                 ></a>
                 <ul>
-                  <li><a href="subjects.php">Subject List</a></li>
-                  <li><a href="add-subject.php">Subject Add</a></li>
-                  <li><a href="edit-subject.php">Subject Edit</a></li>
+                  <li><a href="add-attendance.php">Add Attendance</a></li>
+                  <li><a href="attendance.php">Mark Attendance</a></li>
+                  <li><a href="view-attendance.php">View Attendance</a></li>
                 </ul>
               </li>
               <li class="submenu">

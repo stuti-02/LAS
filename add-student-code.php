@@ -1,3 +1,4 @@
+
 <?php
 
 $fname = $_POST['fname'];
@@ -19,24 +20,28 @@ $pic_name = $fname.rand(111, 999).$pic;
 // exit();
 
 include ("connection.php");
+$query1 = "select * from tbl_student_details";
+$res = mysqli_query($db_con,$query1);
+$row = mysqli_fetch_array($res);
 
-if($pic_type=='image/png' or $pic_type=='image/jpg' or $pic_type=='image/jpeg'){
-    if(move_uploaded_file($pic_tmp, 'assets/stu_pic/'.$pic_name)){
-    
-        $query="insert into tbl_student_details (fname, lname, mobile, email, gender, dob, pic,fee, present_address, permanent_address, enroll_date) values ('$fname','$lname','$mobile','$email','$gender','$dob', '$pic_name',$fee, '$present_address', '$permanent_address', '$enroll_date')";
+
+    if($pic_type=='image/png' or $pic_type=='image/jpg' or $pic_type=='image/jpeg'){
+        if(move_uploaded_file($pic_tmp, 'assets/stu_pic/'.$pic_name)){
         
-        if(mysqli_query($db_con,$query)){
-            header("location:students.php?msg=success");
+            $query="insert into tbl_student_details (fname, lname, mobile, email, gender, dob, pic,fee, present_address, permanent_address, enroll_date) values ('$fname','$lname','$mobile','$email','$gender','$dob', '$pic_name',$fee, '$present_address', '$permanent_address', '$enroll_date')";
+            
+            if(mysqli_query($db_con,$query)){
+                header("location:students.php?msg=success");
+            }else{
+                header("location:add-student.php?msg=queryError");    
+            }
+        
         }else{
-            header("location:add-student.php?msg=queryError");    
+            header("location:add-student.php?msg=imgError");
         }
-    
     }else{
-        header("location:add-student.php?msg=imgError");
+        header("location:add-student.php?msg=typeError");
     }
-}else{
-    header("location:add-student.php?msg=typeError");
-}
 
 
 ?>
