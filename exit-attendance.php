@@ -65,7 +65,7 @@
                             <div class="card card-table">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                            <table class="table table-hover table-center mb-0 datatable">
+                                            <table class="table table-center mb-0 ">
                                                 <thead>
                                                     <tr>
                                                         <th>Phone No.</th>
@@ -73,7 +73,7 @@
                                                 </thead>
                                                 <tbody>                                                
                                                         <tr>
-                                                            <td><input type="text" name="get_phone" autofocus/></td>
+                                                            <td><input type="text" name="get_phone" autofocus required/></td>
                                                             <td><button type="submit" class="btn btn-primary">
                                                                 Submit
                                                             </button>
@@ -117,8 +117,85 @@
     <script src="assets/js/script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-
+    <?php
+    if(isset($_REQUEST['msg']))
+    {
+        $msg=$_REQUEST['msg'];
+        if($msg=='1')
+        {
+        ?>
+            <script>
+                Swal.fire(
+                'Attendance Marked!',
+                'Clocked-Out Sucessfully!',
+                'success'
+                )
+            </script>
+        <?php
+        }
+        elseif($msg=='2')
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Clock-In First!'
+                })
+            </script>
+        <?php
+        }
+        elseif($msg=='3')
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'User does not exist!'
+                })
+            </script>
+        <?php
+        }
+        elseif($msg=='4')
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Clock-Out Already!'
+                })
+            </script>
+        <?php
+        }
+        elseif($msg=='5')
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+                })
+            </script>
+        <?php
+        }
+        elseif($msg=='6')
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Already Clocked-Out!'
+                })
+            </script>
+        <?php
+        }
+    }
+    ?>
+    
   </body>
 
  </html>

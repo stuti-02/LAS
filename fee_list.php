@@ -97,7 +97,7 @@ $row=mysqli_fetch_array($res);
                                                     <td><?php echo "$row[mobile]"; ?></td>
                                                     <td><?php echo "$row[email]"; ?></td>
                                                     <td><?php echo "$row[enroll_date]"; ?></td>
-                                                    <td><?php echo date('Y-m-d'.strtotime( '$row[enroll_date]'. ' + 10days')); ?></td>
+                                                    <td><?php echo date('Y-m-d'.strtotime( '$row[enroll_date]'. strtotime("+30 days"))); ?></td>
                                                     
                                                 </tr>
 

@@ -70,7 +70,7 @@ $res = mysqli_query($db_con,$query);
                         <div class="card card-table">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-center mb-0 datatable">
+                                    <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
@@ -80,11 +80,11 @@ $res = mysqli_query($db_con,$query);
                                         <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo strftime('%c'); ?>" readonly style="background: transparent;border:none"></div>
+                                                        <div class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo date("Y-m-d"); ?>" readonly style="background: transparent;border:none"></div>
                                                     </td>
                                                     <td>
                                                     <div class="col-12">
-                                                        <button type="submit" class="btn btn-primary">
+                                                        <button type="submit" class="btn btn-primary" id="my-btn">
                                                         Mark
                                                         </button>
                                                     </div>
@@ -105,11 +105,12 @@ $res = mysqli_query($db_con,$query);
                 
             </footer>
 
-        </div>
+</div>
 
     
     </div>
 
+   
     
 
 

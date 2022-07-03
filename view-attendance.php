@@ -1,11 +1,9 @@
 <?php
-$get_phone = $_POST['get_phone'];
-
-include ("connection.php");
-$query = "select * from tbl_student_details where mobile=$get_phone";
-echo $query;
-$res = mysqli_query($db_con,$query);
-$row = mysqli_fetch_array($res);
+include("connection.php");
+$query="select * from tbl_attendance join tbl_student_details on tbl_attendance.mobile=tbl_student_details.mobile where tbl_attendance.date=CURRENT_DATE()";
+// echo $query;
+// exit();
+$res=mysqli_query($db_con,$query);
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +13,7 @@ $row = mysqli_fetch_array($res);
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=0"
-    />
+      content="width=device-width, initial-scale=1.0, user-scalable=0"/>
     <title>Softpro Library Hub : : Students's Attendance List</title>
 
     <link rel="shortcut icon" href="assets/img/favicon.png" />
@@ -40,7 +37,7 @@ $row = mysqli_fetch_array($res);
     <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css" />
 
     <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
+</head>
   <body>
     <div class="main-wrapper">
 
@@ -62,8 +59,7 @@ $row = mysqli_fetch_array($res);
                             </ul>
                         </div>
                         <div class="col-auto text-end float-end ms-auto">
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                            <a href="add-student.php" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            <input type="date" class="btn btn-outline-primary me-2" value=""/>
                         </div>
                     </div>
                 </div>
@@ -77,16 +73,72 @@ $row = mysqli_fetch_array($res);
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Mobile Number</th>
+                                                <th>Date</th>
                                                 <th>Clock-In Time</th>
                                                 <th>Clock-Out Time</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                                $i=1;
+                                                while($row=mysqli_fetch_array($res)){
+                                            ?>
                                                <tr>
-                                                <td><?php echo $row['fname']." ".$row['lname']; ?></td>
-                                                <td><?php echo $row['mobile']; ?></td>
-                                               </tr>                                         
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                    <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
+                                                    <a><?php echo $row["fname"] . " " . $row['lname']; ?>
+                                                    <br>
+                                                    <small><?php echo $row["mobile"]; ?></small>
+                                                    </a>
+                                                    </h2>
+                                                </td>
+
+                                                <td>
+                                                    <?php
+                                                    echo $row['date'];
+                                                    ?>
+                                                </td>
+
+                                                <td>
+                                                    <?php
+                                                        if($row["status"]=='Absent'){
+                                                    ?>
+                                                        <button type="button" class="btn btn-rounded btn-outline-danger">Absent</button>
+                                                    <?php
+                                                        }elseif($row["status"]=='Present'){
+                                                    ?>
+                                                        <button type="button" class="btn btn-rounded btn-outline-success"><?php echo $row['entry_time'] ?></button>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                </td>
+
+                                                <td>
+                                                    <?php
+                                                    if($row["status"]=='Present'){
+                                                        if($row["exit_time"]==''){
+                                                    ?>
+                                                        <button type="button" class="btn btn-rounded btn-outline-danger">Not Marked</button>
+                                                    <?php
+                                                        }else{
+                                                    ?>
+                                                        <button type="button" class="btn btn-rounded btn-outline-success"><?php echo $row['exit_time'] ?></button>
+                                                    <?php
+                                                        }
+                                                    }else{
+                                                    ?>
+                                                    <button type="button" class="btn btn-rounded btn-outline-danger">Absent</button>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </td>
+                                               </tr>  
+                                               
+                                               <?php
+                                                }
+                                                $i++;
+                                               ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -97,7 +149,7 @@ $row = mysqli_fetch_array($res);
             </div>
 
             <footer>
-                <p>Copyright © 2020 Dreamguys.</p>
+                
             </footer>
 
         </div>

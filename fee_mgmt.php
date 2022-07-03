@@ -54,8 +54,8 @@ $row = mysqli_fetch_array($res);
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-6 d-flex">
-                        <div class="card flex-fill">
+                    <div class="col-xl-6">
+                        <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">Fee Detail</h5>
                             </div>

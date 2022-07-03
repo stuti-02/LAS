@@ -1,5 +1,5 @@
 <?php
-$msg=$_REQUEST['msg'];
+
 include ("connection.php");
 $query="select * from tbl_student_details ";
 $res = mysqli_query($db_con,$query);
@@ -72,7 +72,7 @@ $res = mysqli_query($db_con,$query);
                             <div class="card card-table">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                            <table class="table table-hover table-center mb-0 datatable">
+                                            <table class="table  table-center mb-0">
                                                 <thead>
                                                     <tr>
                                                         <th>Phone No.</th>
@@ -80,7 +80,7 @@ $res = mysqli_query($db_con,$query);
                                                 </thead>
                                                 <tbody>                                                
                                                         <tr>
-                                                            <td><input type="text" name="get_phone" autofocus/></td>
+                                                            <td><input type="text" name="get_phone" autofocus="autofocus" required/></td>
                                                             <td><button type="submit" class="btn btn-primary">
                                                                 Submit
                                                             </button>
@@ -124,7 +124,59 @@ $res = mysqli_query($db_con,$query);
     <script src="assets/js/script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+    <?php
+    if(isset($_REQUEST['msg'])){
+    $msg=$_REQUEST['msg'];
+    if($msg=='1')
+    {
+    ?>
+        <script>
+            Swal.fire(
+            'Attendance Marked!',
+            'Clocked-In Sucessfully!',
+            'success'
+            )
+        </script>
+    <?php
+    }
+    elseif($msg=='2')
+    {
+    ?>
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!'
+            })
+        </script>
+    <?php
+    }
+    elseif($msg=='3')
+    {
+    ?>
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Already Clocked-In'
+            })
+        </script>
+    <?php
+    }
+    else
+    {
+    ?>
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'User does not exist'
+            })
+        </script>
+    <?php
+    }
+}
+    ?>
 
   </body>
 
