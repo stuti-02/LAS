@@ -62,7 +62,7 @@ $row=mysqli_fetch_array($res);
                                             <ul>
                                                 <li>
                                                     <span class="title-span">Full Name : </span>
-                                                    <span class="info-span"><?php echo "$row[fname] $row[lname]"; ?></span>
+                                                    <span class="info-span"><?php echo "$row[name]"; ?></span>
                                                 </li>
                                                 <li>
                                                     <span class="title-span">Mobile : </span>

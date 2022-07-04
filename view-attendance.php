@@ -18,15 +18,9 @@ $res=mysqli_query($db_con,$query);
 
     <link rel="shortcut icon" href="assets/img/favicon.png" />
 
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap"/>
 
-    <link
-      rel="stylesheet"
-      href="assets/plugins/bootstrap/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css"/>
 
     <link
       rel="stylesheet"
@@ -49,7 +43,6 @@ $res=mysqli_query($db_con,$query);
         <div class="page-wrapper">
             <div class="content container-fluid">
 
-                <form action="view-attendance-code.php" method="post">
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
@@ -59,18 +52,26 @@ $res=mysqli_query($db_con,$query);
                                     <li class="active">View Attendance</li>
                                 </ul>
                             </div>
+
+                            
+                            <?php
+                            $q_date = "select CURRENT_DATE()";
+                            $res_date = mysqli_query($db_con, $q_date);
+                            $row_date = mysqli_fetch_array($res_date);
+                            ?>
+
                             <div class="col-auto text-end float-end ms-auto">
-                                <input type="date" class="btn btn-outline-primary me-2" name="start_date" value="<?php echo date("Y-m-d") ?>"/>
+                            <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="start_date" value="<?php echo $row_date[0]; ?>" id="start-date" style="background: transparent;border:none"></div>
                             </div>
                             <div class="col-auto text-end float-end ms-auto">
-                                <input type="date" class="btn btn-outline-primary me-2" name="end_date" value="<?php echo date("Y-m-d") ?>"/>
+                                <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="end_date" value="<?php echo $row_date[0]; ?>" id="end-date" style="background: transparent;border:none"></div>
                             </div>
                             <div class="col-auto text-end float-end ms-auto">
-                                <input type="submit" class="btn btn-outline-primary me-2" value="Fetch Students"/>
+                                <input type="button" class="btn btn-outline-primary me-2" id="fetch-btn" value="Fetch Students"/>
                             </div>
                         </div>
                     </div>
-                </form>
+                
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -84,9 +85,10 @@ $res=mysqli_query($db_con,$query);
                                                     <th>Date</th>
                                                     <th>Clock-In Time</th>
                                                     <th>Clock-Out Time</th>
+                                                    <th>Details</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="tbl-body">
                                                 <?php
                                                     $i=1;
                                                     while($row=mysqli_fetch_array($res)){
@@ -97,7 +99,8 @@ $res=mysqli_query($db_con,$query);
                                                         <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
                                                         <a><?php echo $row["fname"] . " " . $row['lname']; ?>
                                                         <br>
-                                                        <small><?php echo $row["mobile"]; ?></small>
+                                                        <small><input type="text" name="get_phone" readonly value="<?php echo $row["mobile"];?>" style="border:none;"></small>
+                                                        
                                                         </a>
                                                         </h2>
                                                     </td>
@@ -141,6 +144,10 @@ $res=mysqli_query($db_con,$query);
                                                         }
                                                         ?>
                                                     </td>
+
+                                                    <td>
+                                                        <a href="student-attendance.php"><button type="button" class="btn btn-rounded btn-outline-warning">View All</button></a>
+                                                    </td>
                                                 </tr>  
                                                 
                                                 <?php
@@ -155,6 +162,7 @@ $res=mysqli_query($db_con,$query);
                         </div>
                     </div>
                  
+             
 
             </div>
 
@@ -176,6 +184,39 @@ $res=mysqli_query($db_con,$query);
     <script src="assets/plugins/select2/js/select2.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#fetch-btn").on("click", function(e) {
+                e.preventDefault();
+
+                let sdate = $("#start-date").val();
+                let edate = $("#end-date").val();
+
+                // console.log(sdate);
+                // console.log(edate);
+
+                $.ajax({
+                    url:"view-attendance-code.php",
+                    type:"post",
+                    data:{sd:sdate, ed:edate},
+                    beforeSend:function(){
+                        console.log("loading...")
+                    },
+                    success:function(data){
+                        // handle the response
+                        // console.log(data)
+                        $("#tbl-body").html(data);
+                    }
+
+                })
+
+               
+            })
+        })
+    </script>
+    
   </body>
 
  </html>

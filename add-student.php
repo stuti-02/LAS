@@ -1,3 +1,15 @@
+<?php
+include("connection.php");
+  $q_date = "select CURRENT_DATE()";
+  $res_date = mysqli_query($db_con, $q_date);
+  $row_date = mysqli_fetch_array($res_date);
+
+  $query = "select * from tbl_fee_mgmt order by fee_id desc limit 1";
+  $res = mysqli_query($db_con,$query);
+  $row = mysqli_fetch_array($res);
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
  
@@ -84,14 +96,15 @@
                       </div>
                       <div class="col-12 col-sm-6">
                         <div class="form-group">
-                          <label>First Name</label>
-                          <input type="text" class="form-control" name="fname" required/>
+                          <label> Name</label>
+                          <input type="text" class="form-control" name="name" required/>
                         </div>
                       </div>
+                      
                       <div class="col-12 col-sm-6">
                         <div class="form-group">
-                          <label>Last Name</label>
-                          <input type="text" class="form-control" name="lname" required/>
+                          <label>Student Image</label>
+                          <input type="file" class="form-control" name="pic" required/>
                         </div>
                       </div>
 
@@ -114,7 +127,7 @@
                         <div class="form-group">
                           <label>Enrollment Date</label>
                           <div>
-                            <input type="date" class="form-control" name="enroll_date" required/>
+                            <input type="text" class="form-control" name="enroll_date" value="<?php echo $row_date[0]; ?>" readonly required style="background:transparent;"/>
                           </div>
                         </div>
                       </div>
@@ -132,27 +145,30 @@
                         <div class="form-group">
                           <label>Gender</label>
                           <select class="form-control select" name="gender" required>
-                            <option>Select Gender</option>
-                            <option value="female">Female</option>
                             <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            
                           </select>
                         </div>
                       </div>
-
-                      
-                      <div class="col-12 col-sm-4">
-                        <div class="form-group">
-                          <label>Student Image</label>
-                          <input type="file" class="form-control" name="pic" required/>
-                        </div>
-                      </div>
+                    
 
                       <div class="col-12 col-sm-4">
                         <div class="form-group">
                           <label>Fee</label>
                           <div>
-                            <input type="text" class="form-control" name="fee" "/>
+                            <input type="text" class="form-control" name="fee" value="<?php echo $row["fee_amt"]; ?>" readonly style="background:transparent;"/>
                           </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-4">
+                        <div class="form-group">
+                          <label>Payment Method</label>
+                          <select class="form-control select" name="pay_method" required>
+                            <option value="cash">Cash</option>
+                            <option value="upi">UPI</option>
+                          </select>
                         </div>
                       </div>
                       
@@ -199,19 +215,44 @@
   <?php
   if(isset($_REQUEST["msg"]))
   {
-  $msg=$_REQUEST["msg"];
-  if($msg=='1')
-  {
-  ?>
-        <script>
-            Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Mobile no. already exist!'
-            })
-        </script>
-  <?php
-  }
+    $msg=$_REQUEST["msg"];
+    if($msg=='1')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'success',
+              title: 'Success...',
+              text: 'Student Enrolled Successfully!'
+              })
+          </script>
+    <?php
+    }
+    elseif($msg=='2')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Try Again!'
+              })
+          </script>
+    <?php
+    }
+    else
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Already Enrolled!'
+              })
+          </script>
+    <?php
+    }
+
   }
   ?>
 

@@ -1,6 +1,6 @@
 <?php
 include("connection.php");
-$query="select * from tbl_student_details order by stu_id desc";
+$query="select * from tbl_student_details where status='true' order by stu_id desc";
 $res=mysqli_query($db_con,$query);
 ?>
 
@@ -62,6 +62,7 @@ $res=mysqli_query($db_con,$query);
                                     <table class="table table-hover table-center mb-0 datatable">
                                         <thead>
                                             <tr>
+                                                <th>S.No.</th>
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Mobile Number</th>
@@ -74,12 +75,14 @@ $res=mysqli_query($db_con,$query);
                                         <tbody>
                                             
                                             <?php
+                                                $a=1;
                                                 while($row=mysqli_fetch_array($res)) 
                                                 {
                                             ?>
                                                 <tr>
+                                                    <td><?php echo $a; ?></td>
                                                     <td>SLH22<?php echo "$row[stu_id]"; ?></td>
-                                                    <td><?php echo "$row[fname] $row[lname]";?></td>
+                                                    <td><?php echo "$row[name]";?></td>
                                                     <td><?php echo "$row[mobile]"; ?></td>
                                                     <td><?php echo "$row[email]"; ?></td>
                                                     <td><?php echo "$row[fee]"; ?></td>
@@ -89,7 +92,7 @@ $res=mysqli_query($db_con,$query);
                                                             <a href="update-student.php?get_id=<?php echo "$row[stu_id]"; ?>" class="btn btn-sm bg-success-light me-2">
                                                                 <i class="fas fa-pen"></i>
                                                             </a>
-                                                            <a href="delete-student.php" class="btn btn-sm bg-danger-light">
+                                                            <a href="delete-student.php?get_id=<?php echo "$row[stu_id]"; ?>" class="btn btn-sm bg-danger-light">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </div>
@@ -97,7 +100,9 @@ $res=mysqli_query($db_con,$query);
                                                 </tr>
 
                                             <?php
+                                                $a++;
                                                 }
+                                                
                                             ?>
                                             
                                         </tbody>
@@ -110,7 +115,7 @@ $res=mysqli_query($db_con,$query);
             </div>
 
             <footer>
-                <p>Copyright © 2020 Dreamguys.</p>
+                
             </footer>
 
         </div>
@@ -127,6 +132,41 @@ $res=mysqli_query($db_con,$query);
     <script src="assets/plugins/datatables/datatables.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <?php
+    if(isset($_REQUEST["msg"]))
+    {
+        $msg=$_REQUEST["msg"];
+        if($msg=='1')
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'success',
+                title: 'Deleted...',
+                text: 'Student Data Deleted Successfully!'
+                })
+            </script>
+        <?php
+        }
+        else
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Try Again!'
+                })
+            </script>
+        <?php
+        }
+
+    }
+    ?>
+
+
 </body>
 
 

@@ -46,7 +46,7 @@ $row=mysqli_fetch_array($res);
                         <div class="col">
                             <h3 class="page-title">Update Student's Details</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="students.html">Students / </a></li>
+                                <li class="breadcrumb-item"><a href="students.php">Students / </a></li>
                                 <li class="active">Update Student's Details</li>
                             </ul>
                         </div>
@@ -63,16 +63,28 @@ $row=mysqli_fetch_array($res);
                                         <div class="col-12">
                                             <h5 class="form-title"><span>Student Information</span></h5>
                                         </div>
+
+
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" name="fname" class="form-control" value="<?php echo "$row[fname]"; ?>">
+                                                <label>Enrollment Id</label>
+                                                <input type="text" name="name" class="form-control" readonly value="<?php echo "SLH22"."$row[stu_id]"; ?>" style="background:transparent;">
                                             </div>
                                         </div>
+
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input type="text" name="lname" class="form-control" value="<?php echo "$row[lname]"; ?>">
+                                                <label>Name</label>
+                                                <input type="text" name="name" class="form-control" value="<?php echo "$row[name]"; ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Joining Date</label>
+                                                <div>
+                                                    <input type="text" name="enroll_date" class="form-control" readonly value="<?php echo "$row[enroll_date]"; ?>" style="background:transparent;">
+                                                </div>
                                             </div>
                                         </div>
                                         
@@ -86,14 +98,7 @@ $row=mysqli_fetch_array($res);
                                             </div>
                                         </div>
                             
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label>Joining Date</label>
-                                                <div>
-                                                    <input type="text" name="enroll_date" class="form-control" value="<?php echo "$row[enroll_date]"; ?>">
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label>Mobile Number</label>

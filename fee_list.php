@@ -1,8 +1,7 @@
 <?php
 include ("connection.php");
-$query = "select * from tbl_student_details";
+$query = "select * from tbl_student_details where status='true' order by enroll_date desc";
 $res= mysqli_query($db_con,$query);
-$row=mysqli_fetch_array($res);
 
 ?>
 
@@ -92,13 +91,12 @@ $row=mysqli_fetch_array($res);
                                                 $Date= "$row[enroll_date]";
                                             ?>
                                                 <tr>
-                                                    <td>SLH22<?php echo "$row[stu_id]"; ?></td>
-                                                    <td><?php echo "$row[fname] $row[lname]";?></td>
-                                                    <td><?php echo "$row[mobile]"; ?></td>
-                                                    <td><?php echo "$row[email]"; ?></td>
-                                                    <td><?php echo "$row[enroll_date]"; ?></td>
-                                                    <td><?php echo date('Y-m-d'.strtotime( '$row[enroll_date]'. strtotime("+30 days"))); ?></td>
-                                                    
+                                                   <td>SLH22<?Php echo $row["stu_id"]; ?></td>
+                                                   <td><?php echo $row["name"]; ?></td>
+                                                   <td><?php echo $row["mobile"]; ?></td>
+                                                   <td><?php echo $row["email"]; ?></td>
+                                                   <td><?php echo $row["enroll_date"]; ?></td>
+                                                   <td><?php echo date('Y-m-d', strtotime($row["enroll_date"]. ' +30 days')); ?></td>
                                                 </tr>
 
                                             <?php
