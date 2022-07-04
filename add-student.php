@@ -120,8 +120,20 @@ include("connection.php");
                           <input type="text" class="form-control" name="email" required/>
                         </div>
                       </div>
-                      
-                      
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Aadhar Card Number</label>
+                          <input type="text" class="form-control" name="aadhar" minlength="12" maxlength="12" required/>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Aadhar Card Image</label>
+                          <input type="file" class="form-control" name="aadhar_pic" required/>
+                        </div>
+                      </div>
 
                       <div class="col-12 col-sm-6">
                         <div class="form-group">

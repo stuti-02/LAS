@@ -123,6 +123,37 @@ $res = mysqli_query($db_con,$query);
     <script src="assets/plugins/select2/js/select2.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <?php
+    if(isset($_REQUEST['msg'])){
+    $msg=$_REQUEST['msg'];
+    if($msg=='1')
+    {
+    ?>
+        <script>
+            Swal.fire(
+            'Success!',
+            'Attendance Marked Sucessfully!',
+            'success'
+            )
+        </script>
+    <?php
+    }
+    else
+    {
+    ?>
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!'
+            })
+        </script>
+    <?php
+    }
+    }
+    ?>
   </body>
 
  </html>

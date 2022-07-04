@@ -217,9 +217,8 @@
                 ></a>
 
                 <ul>
+                  <li><a href="add-fee.php">Add Fee</a></li>
                   <li><a href="fee_list.php">Student's List</a></li>
-                  <li><a href="add-department.php">Department Add</a></li>
-                  <li><a href="edit-department.php">Department Edit</a></li>
                 </ul>
               </li>
               <li class="submenu">

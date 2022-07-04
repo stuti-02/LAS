@@ -1,6 +1,6 @@
 <?php
 include ("connection.php");
-$query = "select * from tbl_student_details where status='true' order by enroll_date desc";
+$query = "select * from tbl_fee join tbl_student_details on tbl_fee.mobile=tbl_student_details.mobile where tbl_student_details.status='true' order by tbl_fee.month_start desc";
 $res= mysqli_query($db_con,$query);
 
 ?>
@@ -95,8 +95,8 @@ $res= mysqli_query($db_con,$query);
                                                    <td><?php echo $row["name"]; ?></td>
                                                    <td><?php echo $row["mobile"]; ?></td>
                                                    <td><?php echo $row["email"]; ?></td>
-                                                   <td><?php echo $row["enroll_date"]; ?></td>
-                                                   <td><?php echo date('Y-m-d', strtotime($row["enroll_date"]. ' +30 days')); ?></td>
+                                                   <td><?php echo $row["month_start"]; ?></td>
+                                                   <td><?php echo $row["month_end"]; ?></td>
                                                 </tr>
 
                                             <?php

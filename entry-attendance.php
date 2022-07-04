@@ -1,7 +1,14 @@
 <?php
 
 include ("connection.php");
-$query="select * from tbl_student_details ";
+$q_date = "select CURRENT_DATE()";
+$res_date = mysqli_query($db_con, $q_date);
+$row_date = mysqli_fetch_array($res_date);
+
+
+
+
+$query="select name from tbl_student_details where status='true'";
 $res = mysqli_query($db_con,$query);
 ?>
 
@@ -60,7 +67,7 @@ $res = mysqli_query($db_con,$query);
                                 </ul>
                             </div>
                             <div class="col-auto text-end float-end ms-auto">
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo date("Y-m-d") ?>" style="background: transparent;border:none"></a>
+                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo $row_date[0]; ?>" style="background: transparent;border:none"></a>
                             </div>
                         </div>
                     </div>
@@ -80,7 +87,7 @@ $res = mysqli_query($db_con,$query);
                                                 </thead>
                                                 <tbody>                                                
                                                         <tr>
-                                                            <td><input type="text" name="get_phone" autofocus="autofocus" required/></td>
+                                                            <td><input type="text" name="get_phone" autofocus="autofocus" required minlength="10" maxlength="10"/></td>
                                                             <td><button type="submit" class="btn btn-primary">
                                                                 Submit
                                                             </button>
@@ -98,6 +105,33 @@ $res = mysqli_query($db_con,$query);
                     
                     </div>
                 </form>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card card-table">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-center mb-0 datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Mobile Number</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                           
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                
             </form>

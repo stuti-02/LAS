@@ -1,3 +1,9 @@
+<?php
+include("connection.php");
+$q_date = "select CURRENT_DATE()";
+$res_date = mysqli_query($db_con, $q_date);
+$row_date = mysqli_fetch_array($res_date);
+?>
 <!DOCTYPE html>
 <html lang="en">
  
@@ -53,7 +59,7 @@
                                 </ul>
                             </div>
                             <div class="col-auto text-end float-end ms-auto">
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo date("Y-m-d") ?>" style="background: transparent;border:none"></a>
+                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo $row_date[0]; ?>" style="background: transparent;border:none"></a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +79,7 @@
                                                 </thead>
                                                 <tbody>                                                
                                                         <tr>
-                                                            <td><input type="text" name="get_phone" autofocus="autofocus" required/></td>
+                                                            <td><input type="text" name="get_phone" autofocus="autofocus" required minlength="10" maxlength="10"/></td>
                                                             <td><button type="submit" class="btn btn-primary">
                                                                 Submit
                                                             </button>
