@@ -12,5 +12,9 @@ while($row=mysqli_fetch_array($res))
     $query2="insert into tbl_attendance(date,mobile,status,entry_time,exit_time) values ('$date','$mobile','Absent','','')";
     mysqli_query($db_con,$query2);
 }
+if(mysqli_query($db_con,$query2))
+{
+    header("location:mark-attendance.php");
+}
 
 ?>

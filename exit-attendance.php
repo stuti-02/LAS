@@ -73,7 +73,7 @@
                                                 </thead>
                                                 <tbody>                                                
                                                         <tr>
-                                                            <td><input type="text" name="get_phone" autofocus required/></td>
+                                                            <td><input type="text" name="get_phone" autofocus="autofocus" required/></td>
                                                             <td><button type="submit" class="btn btn-primary">
                                                                 Submit
                                                             </button>

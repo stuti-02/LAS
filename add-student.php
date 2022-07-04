@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
  
@@ -99,7 +98,7 @@
                       <div class="col-12 col-sm-6">
                         <div class="form-group">
                           <label>Mobile Number</label>
-                          <input type="text" class="form-control" name="mobile" minlength="10" maxlength="13" required/>
+                          <input type="text" class="form-control" name="mobile" minlength="10" maxlength="10" required/>
                         </div>
                       </div>
                       <div class="col-12 col-sm-6">
@@ -184,6 +183,7 @@
       </div>
     </div>
 
+
     <script src="assets/js/jquery-3.6.0.min.js"></script>
 
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -193,6 +193,28 @@
     <script src="assets/plugins/select2/js/select2.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <?php
+  if(isset($_REQUEST["msg"]))
+  {
+  $msg=$_REQUEST["msg"];
+  if($msg=='1')
+  {
+  ?>
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Mobile no. already exist!'
+            })
+        </script>
+  <?php
+  }
+  }
+  ?>
+
   </body>
 
  </html>
