@@ -5,10 +5,10 @@ $res_fee=mysqli_query($db_con,$query_fee);
 $row_fee=mysqli_fetch_array($res_fee);
 
 
+
 $q_date = "select CURRENT_DATE()";
 $res_date = mysqli_query($db_con, $q_date);
 $row_date = mysqli_fetch_array($res_date);
-
 ?>
 
 <!DOCTYPE html>
@@ -87,8 +87,8 @@ $row_date = mysqli_fetch_array($res_date);
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><input type="text" name="name" class="form-control"></td>
-                                                    <td><input type="text" name="mobile" class="form-control"></td>
+                                                    <td><input type="text" name="name" class="form-control" required></td>
+                                                    <td><input type="text" name="mobile" class="form-control" required minlength="10" maxlength="10"></td>
                                                     <td><input type="text" name="amount" class="form-control" value="<?php echo $row_fee["fee_amt"]; ?>" readonly style="background: transparent;"></td>
                                                     <td>
                                                     <select name="pay_method" class="form-control">
@@ -110,6 +110,81 @@ $row_date = mysqli_fetch_array($res_date);
                     </div>
             </form>
             
+
+            <?php
+            $query_fetch = "select * from tbl_student_details join tbl_fee on tbl_student_details.mobile=tbl_fee.mobile where tbl_student_details.status='true' order by tbl_fee.fee_id desc limit 10";
+            $res_fetch = mysqli_query($db_con,$query_fetch);
+            ?>
+
+
+            <div class="row mt-5 pt-5">
+                            <div class="col">
+                                <h3 class="page-title">View Fee</h3>
+                            </div>
+                        <div class="col-sm-12 mt-3">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-center mb-0 datatable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No.</th>
+                                                        <th>Full Name</th>
+                                                        <th>Mobile Number</th>
+                                                        <th>Amount</th>
+                                                        <th>Payment Method</th>
+                                                        <th>Month Start</th>
+                                                        <th>Month End</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                            
+                                                <?php
+                                                if(mysqli_num_rows($res_fetch))
+                                                {
+                                                    $a=1;
+                                                    while($row_fetch = mysqli_fetch_array($res_fetch))
+                                                    {
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $a; ?></td>
+                                                            <td><?php echo $row_fetch["name"]; ?></td>
+                                                            <td><?php echo $row_fetch["mobile"]; ?></td>
+                                                            <td><?php echo $row_fetch["amount"]; ?></td>
+                                                            <td><?php echo $row_fetch["pay_method"]; ?></td>
+                                                            <td><?php echo $row_fetch["month_start"]; ?></td>
+                                                            <td><?php echo $row_fetch["month_end"]; ?></td>
+                                                            <td>
+                                                                <button class="btn btn-warning text-light">Paid</button>
+                                                            </td>
+                                                        </tr>
+
+                                                    <?php
+                                                    $a++;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                ?>
+
+                                                <?php
+                                                }
+                                                ?>
+                                                </tbody>
+
+                                            </table>
+
+                                           
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    
+                    </div>
+
+
             </div>
 
             <footer>

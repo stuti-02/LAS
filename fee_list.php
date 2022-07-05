@@ -3,6 +3,11 @@ include ("connection.php");
 $query = "select * from tbl_fee join tbl_student_details on tbl_fee.mobile=tbl_student_details.mobile where tbl_student_details.status='true' order by tbl_fee.month_start desc";
 $res= mysqli_query($db_con,$query);
 
+
+$q_date = "select CURRENT_DATE()";
+$res_date = mysqli_query($db_con, $q_date);
+$row_date = mysqli_fetch_array($res_date);
+
 ?>
 
 
@@ -74,32 +79,49 @@ $res= mysqli_query($db_con,$query);
                                     <table class="table table-hover table-center mb-0 datatable">
                                         <thead>
                                             <tr>
+                                                <th>S.No.</th>
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Mobile Number</th>
                                                 <th>Email</th>
                                                 <th>Month Start</th>
                                                 <th>Month End</th>
-                                                <th class="text-end">Status</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             
                                             <?php
+                                                $a=1;
                                                 while($row=mysqli_fetch_array($res)) 
                                                 {
                                                 $Date= "$row[enroll_date]";
                                             ?>
                                                 <tr>
+                                                    <td><?php echo $a; ?></td>
                                                    <td>SLH22<?Php echo $row["stu_id"]; ?></td>
                                                    <td><?php echo $row["name"]; ?></td>
                                                    <td><?php echo $row["mobile"]; ?></td>
                                                    <td><?php echo $row["email"]; ?></td>
                                                    <td><?php echo $row["month_start"]; ?></td>
                                                    <td><?php echo $row["month_end"]; ?></td>
+                                                   <td><input type="button" value="
+                                                   <?php
+                                                    if($row_date[0]>$row["month_end"])
+                                                    {
+                                                        echo "red";
+                                                    }
+                                                    else
+                                                    {
+                                                        echo "green";
+                                                    }
+                                                   ?>
+                                                   ">
+                                                </td>
                                                 </tr>
 
                                             <?php
+                                            $a++;
                                                 }
                                             ?>
                                             

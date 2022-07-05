@@ -1,3 +1,28 @@
+<?php
+include ("connection.php");
+$query_stu = "select count(name) from tbl_student_details where status='true'";
+$res_stu=mysqli_query($db_con,$query_stu);
+$row_stu=mysqli_fetch_array($res_stu);
+
+
+
+$query_male="select count(name) from tbl_student_details where gender='male' and status='true'";
+$res_male = mysqli_query($db_con,$query_male);
+$row_male= mysqli_fetch_array($res_male);
+
+$query_female="select count(name) from tbl_student_details where gender='female' and status='true'";
+$res_female = mysqli_query($db_con,$query_female);
+$row_female= mysqli_fetch_array($res_female);
+
+$query_present = "select count(mobile) from tbl_attendance where date=CURRENT_DATE() and status='Present'";
+$res_present=mysqli_query($db_con,$query_present);
+$row_present=mysqli_fetch_array($res_present);
+
+$query_fee = "select * from tbl_student_details join tbl_fee on tbl_student_details.mobile=tbl_fee.mobile where tbl_student_details.status='true' order by tbl_fee.fee_id desc limit 5";
+$res_fee = mysqli_query($db_con,$query_fee);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -60,8 +85,8 @@
                       <i class="fas fa-user-graduate"></i>
                     </div>
                     <div class="db-info">
-                      <h3>50055</h3>
-                      <h6>Students</h6>
+                      <h3 class="text-end"><?php echo $row_stu[0]; ?></h3>
+                      <h6>Total Students</h6>
                     </div>
                   </div>
                 </div>
@@ -77,8 +102,8 @@
                       <i class="fas fa-crown"></i>
                     </div>
                     <div class="db-info">
-                      <h3>50+</h3>
-                      <h6>Awards</h6>
+                      <h3 class="text-end"><?php echo $row_male[0]; ?></h3>
+                      <h6>Male Students</h6>
                     </div>
                   </div>
                 </div>
@@ -94,8 +119,8 @@
                       <i class="fas fa-building"></i>
                     </div>
                     <div class="db-info">
-                      <h3>30+</h3>
-                      <h6>Department</h6>
+                      <h3 class="text-end"><?php echo $row_female[0]; ?></h3>
+                      <h6>Female Students</h6>
                     </div>
                   </div>
                 </div>
@@ -111,8 +136,8 @@
                       <i class="fas fa-file-invoice-dollar"></i>
                     </div>
                     <div class="db-info">
-                      <h3>$505</h3>
-                      <h6>Revenue</h6>
+                      <h3 class="text-end"><?Php echo $row_present[0]; ?></h3>
+                      <h6>Today Present Students</h6>
                     </div>
                   </div>
                 </div>
@@ -184,76 +209,41 @@
             <div class="col-md-6 d-flex">
               <div class="card flex-fill">
                 <div class="card-header">
-                  <h5 class="card-title">Star Students</h5>
+                  <h5 class="card-title">Recent Fees</h5>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table table-hover table-center">
                       <thead class="thead-light">
                         <tr>
-                          <th>ID</th>
+                          <th>S.No.</th>
                           <th>Name</th>
-                          <th class="text-center">Marks</th>
-                          <th class="text-center">Percentage</th>
-                          <th class="text-end">Year</th>
+                          <th class="text-center">Amount</th>
+                          <th class="text-center">Payment Method</th>
+                          <th class="text-center">Month Start</th>
+                          <th class="text-center">Month End</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td class="text-nowrap">
-                            <div>PRE2209</div>
-                          </td>
-                          <td class="text-nowrap">John Smith</td>
-                          <td class="text-center">1185</td>
-                          <td class="text-center">98%</td>
-                          <td class="text-end">
-                            <div>2019</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="text-nowrap">
-                            <div>PRE1245</div>
-                          </td>
-                          <td class="text-nowrap">Jolie Hoskins</td>
-                          <td class="text-center">1195</td>
-                          <td class="text-center">99.5%</td>
-                          <td class="text-end">
-                            <div>2018</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="text-nowrap">
-                            <div>PRE1625</div>
-                          </td>
-                          <td class="text-nowrap">Pennington Joy</td>
-                          <td class="text-center">1196</td>
-                          <td class="text-center">99.6%</td>
-                          <td class="text-end">
-                            <div>2017</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="text-nowrap">
-                            <div>PRE2516</div>
-                          </td>
-                          <td class="text-nowrap">Millie Marsden</td>
-                          <td class="text-center">1187</td>
-                          <td class="text-center">98.2%</td>
-                          <td class="text-end">
-                            <div>2016</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="text-nowrap">
-                            <div>PRE2209</div>
-                          </td>
-                          <td class="text-nowrap">John Smith</td>
-                          <td class="text-center">1185</td>
-                          <td class="text-center">98%</td>
-                          <td class="text-end">
-                            <div>2015</div>
-                          </td>
-                        </tr>
+                        <?php
+                          $a=1;
+                          while($row_fee=mysqli_fetch_array($res_fee))
+                          {
+                        ?>
+                            <tr>
+                            <td><?php echo $a; ?></td>
+                            <td class="text-nowrap"><?php echo $row_fee["name"]; ?></td>
+                            <td class="text-nowrap"><?php echo $row_fee["amount"]; ?></td>
+                            <td class="text-center"><?php echo $row_fee["pay_method"]; ?></td>
+                            <td class="text-center"><?php echo $row_fee["month_start"]; ?></td>
+                            <td class="text-end">
+                            <?php echo $row_fee["month_end"]; ?>
+                            </td>
+                          </tr>
+                        <?php
+                          $a++;
+                          }
+                        ?>
                       </tbody>
                     </table>
                   </div>
@@ -263,7 +253,7 @@
             <div class="col-md-6 d-flex">
               <div class="card flex-fill">
                 <div class="card-header">
-                  <h5 class="card-title">Student Activity</h5>
+                  <h5 class="card-title">Fee Structure</h5>
                 </div>
                 <div class="card-body">
                   <ul class="activity-feed">
@@ -306,36 +296,7 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card flex-fill fb sm-box">
-                <i class="fab fa-facebook"></i>
-                <h6>50,095</h6>
-                <p>Likes</p>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card flex-fill twitter sm-box">
-                <i class="fab fa-twitter"></i>
-                <h6>48,596</h6>
-                <p>Follows</p>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card flex-fill insta sm-box">
-                <i class="fab fa-instagram"></i>
-                <h6>52,085</h6>
-                <p>Follows</p>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card flex-fill linkedin sm-box">
-                <i class="fab fa-linkedin-in"></i>
-                <h6>69,050</h6>
-                <p>Follows</p>
-              </div>
-            </div>
-          </div>
+
         </div>
 
         <footer>
@@ -351,9 +312,122 @@
     <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <script src="assets/plugins/apexchart/apexcharts.min.js"></script>
-    <script src="assets/plugins/apexchart/chart-data.js"></script>
+    <!-- <script src="assets/plugins/apexchart/chart-data.js"></script> -->
 
     <script src="assets/js/script.js"></script>
+
+    <script>
+      'use strict';
+
+$(document).ready(function() {
+
+	// Area chart
+	
+	if ($('#apexcharts-area').length > 0) {
+	var options = {
+		chart: {
+			height: 350,
+			type: "area",
+			toolbar: {
+				show: false
+			},
+		},
+		dataLabels: {
+			enabled: false
+		},
+		stroke: {
+			curve: "smooth"
+		},
+		series: [{
+			name: "Teachers",
+			data: [45, 60, 75, 51, 42, 42, 30]
+		}, {
+			name: "Students",
+			color: '#FFBC53',
+			data: [24, 48, 56, 32, 34, 52, 25]
+		}],
+		xaxis: {
+			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+		}
+	}
+	var chart = new ApexCharts(
+		document.querySelector("#apexcharts-area"),
+		options
+	);
+	chart.render();
+	}
+
+	// Bar chart
+	
+	if ($('#bar').length > 0) {
+	var optionsBar = {
+		chart: {
+			type: 'bar',
+			height: 350,
+			width: '100%',
+			stacked: true,
+			toolbar: {
+				show: false
+			},
+		},
+		dataLabels: {
+			enabled: false
+		},
+		plotOptions: {
+			bar: {
+				columnWidth: '45%',
+			}
+		},
+		series: [{
+			name: "Boys",
+			color: '#fdbb38',
+			data: [420, 532, 516, 575, 519, 517, 454, 392, 262, 383, 446, 551, 563, 421, 563, 254, 452],
+		}, {
+			name: "Girls",
+			color: '#19affb',
+			data: [336, 612, 344, 647, 345, 563, 256, 344, 323, 300, 455, 456, 526, 652, 325, 425, 436],
+		}],
+		labels: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020],
+		xaxis: {
+			labels: {
+				show: false
+			},
+			axisBorder: {
+				show: false
+			},
+			axisTicks: {
+				show: false
+			},
+		},
+		yaxis: {
+			axisBorder: {
+				show: false
+			},
+			axisTicks: {
+				show: false
+			},
+			labels: {
+				style: {
+					colors: '#777'
+				}
+			}
+		},
+		title: {
+			text: '',
+			align: 'left',
+			style: {
+				fontSize: '18px'
+			}
+		}
+
+	}
+  
+	var chartBar = new ApexCharts(document.querySelector('#bar'), optionsBar);
+	chartBar.render();
+	}
+  
+});
+    </script>
   </body>
 
   </html>

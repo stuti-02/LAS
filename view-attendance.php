@@ -1,6 +1,6 @@
 <?php
 include("connection.php");
-$query="select * from tbl_attendance join tbl_student_details on tbl_attendance.mobile=tbl_student_details.mobile where tbl_attendance.date=CURRENT_DATE()";
+$query="select tsd.name, tsd.mobile, tsd.pic, ta.status, ta.entry_time, ta.exit_time, ta.date from tbl_attendance as ta join tbl_student_details as tsd on ta.mobile=tsd.mobile where ta.date=CURRENT_DATE()";
 // echo $query;
 // exit();
 $res=mysqli_query($db_con,$query);
@@ -60,15 +60,16 @@ $res=mysqli_query($db_con,$query);
                             $row_date = mysqli_fetch_array($res_date);
                             ?>
 
-                            <div class="col-auto text-end float-end ms-auto">
-                            <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="start_date" value="<?php echo $row_date[0]; ?>" id="start-date" style="background: transparent;border:none"></div>
-                            </div>
-                            <div class="col-auto text-end float-end ms-auto">
-                                <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="end_date" value="<?php echo $row_date[0]; ?>" id="end-date" style="background: transparent;border:none"></div>
-                            </div>
-                            <div class="col-auto text-end float-end ms-auto">
-                                <input type="button" class="btn btn-outline-primary me-2" id="fetch-btn" value="Fetch Students"/>
-                            </div>
+                                <div class="col-auto text-end float-end ms-auto">
+                                    <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="start_date" value="<?php echo $row_date[0]; ?>" id="start-date" style="background: transparent;border:none">
+                                    </div>
+                                </div>
+                                <div class="col-auto text-end float-end ms-auto">
+                                        <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="end_date" value="<?php echo $row_date[0]; ?>" id="end-date" style="background: transparent;border:none"></div>
+                                </div>
+                                <div class="col-auto text-end float-end ms-auto">
+                                        <input type="button" class="btn btn-outline-primary me-2" id="fetch-btn" value="Fetch Students"/>
+                                </div>
                         </div>
                     </div>
                 
@@ -78,7 +79,7 @@ $res=mysqli_query($db_con,$query);
                             <div class="card card-table">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-center mb-0 datatable">
+                                        <table class="table table-hover table-center mb-0 datatable" id="tbl-body">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -88,7 +89,7 @@ $res=mysqli_query($db_con,$query);
                                                     <th>Details</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tbl-body">
+                                            <tbody >
                                                 <?php
                                                     $i=1;
                                                     while($row=mysqli_fetch_array($res)){
@@ -97,7 +98,7 @@ $res=mysqli_query($db_con,$query);
                                                     <td>
                                                         <h2 class="table-avatar">
                                                         <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
-                                                        <a><?php echo $row["fname"] . " " . $row['lname']; ?>
+                                                        <a><?php echo $row["name"]; ?>
                                                         <br>
                                                         <small><input type="text" name="get_phone" readonly value="<?php echo $row["mobile"];?>" style="border:none;"></small>
                                                         
@@ -117,7 +118,7 @@ $res=mysqli_query($db_con,$query);
                                                         ?>
                                                             <button type="button" class="btn btn-rounded btn-outline-danger">Absent</button>
                                                         <?php
-                                                            }elseif($row["status"]=='Present'){
+                                                            }else{
                                                         ?>
                                                             <button type="button" class="btn btn-rounded btn-outline-success"><?php echo $row['entry_time'] ?></button>
                                                         <?php

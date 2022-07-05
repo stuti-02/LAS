@@ -39,13 +39,13 @@ $res1=mysqli_query($db_con,$query1);
     {
         if($pic_type=='image/png' or $pic_type=='image/jpg' or $pic_type=='image/jpeg')
         {
-            if((move_uploaded_file($pic_tmp, 'assets/stu_pic/'.$pic_name)))
+            if((move_uploaded_file($pic_tmp, 'assets/stu_pic/'.$pic_name)) )
             {
 
                 $query="insert into tbl_student_details (name, mobile, email, gender, dob, pic,aadhar,aadhar_pic,fee,pay_method, present_address, permanent_address, enroll_date,status) values ('$name','$mobile','$email','$gender','$dob','$pic_name','$aadhar','$aadhar_pic','$fee','$pay_method','$present_address', '$permanent_address', '$enroll_date','true')";
 
                 
-                 $query2="insert into tbl_fee (mobile,month_start,month_end,amount,pay_via) values ('$mobile','$enroll_date','$month_end','$fee','$pay_method')";
+                 $query2="insert into tbl_fee (mobile,month_start,month_end,amount,payment_date,pay_via) values ('$mobile','$enroll_date','$month_end','$fee',CURRENT_DATE(),'$pay_method')";
                     
                  if(mysqli_query($db_con,$query2) && mysqli_query($db_con,$query))
                     {
