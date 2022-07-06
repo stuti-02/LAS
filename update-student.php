@@ -1,3 +1,9 @@
+<?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,7 +108,7 @@ $row=mysqli_fetch_array($res);
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label>Mobile Number</label>
-                                                <input type="text" name="mobile" class="form-control" value="<?php echo "$row[mobile]"; ?>">
+                                                <input type="text" name="mobile" class="form-control" value="<?php echo "$row[mobile]"; ?>" minlength="10" maxlength="10"/>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6">
@@ -135,9 +141,26 @@ $row=mysqli_fetch_array($res);
 
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
+                                                <label>Aadhar Number</label>
+                                                <input type="text" name="aadhar" class="form-control" value="<?php echo "$row[aadhar]"; ?>" minlength="12" maxlength="12">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
                                                 <label>Student Image</label> <br>
                                                 <img src="assets/stu_pic/<?php echo "$row[pic]"; ?>" height="100px" style="border:1px solid grey;" alt=""> 
                                                 <input type="file" class="ms-3" name="pic"/>
+                                            </div>
+                                        </div>
+
+                                        
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Aadhar Card Image</label> <br>
+                                                <img src="assets/aadhar_pic/<?php echo "$row[aadhar_pic]"; ?>" height="100px" style="border:1px solid grey;" alt=""> 
+                                                <input type="file" class="ms-3" name="aadhar_pic"/>
                                             </div>
                                         </div>
 
@@ -169,6 +192,5 @@ $row=mysqli_fetch_array($res);
     <script src="assets/js/script.js"></script>
 </body>
 
-<!-- Mirrored from preschool.dreamguystech.com/html-template/template/edit-student.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Jun 2022 06:52:04 GMT -->
 
 </html>

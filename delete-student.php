@@ -1,4 +1,10 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
+
 $get_id= $_REQUEST['get_id'];
 include ("connection.php");
 $query="select * from tbl_student_details where stu_id='$get_id'";

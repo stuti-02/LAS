@@ -1,4 +1,9 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
 include ("connection.php");
 ?>
 <!DOCTYPE html>
@@ -51,7 +56,7 @@ include ("connection.php");
                         <div class="col">
                             <h3 class="page-title">Fee Collection</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index-2.php">Student /</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                 <li class="active">Fee Collection</li>
                             </ul>
                         </div>
@@ -79,38 +84,34 @@ include ("connection.php");
 
             
             <form method="post" action="fee-collection-code.php">
-                <div class="row mt-5">
-                    <div class="col-sm-12">
+                <div class="row mt-5 text-center">
+                    <div class="col-sm-7">
                         <div class="card card-table">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                    <td>
-                                                        
-                                                    </td>
-                                                
-                                                </tr>                          
-                                        </tbody>
+                                    <table class="table table-hover table-center mb-0 datatable"  id="tbl-body">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Payment Method</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">No Data Found</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-5 border py-3" style="height:12rem;">
+                        <h5>Total Received Amount is : <span id="sum"></span></h5> <br>
+                        Cash : <span id="cash"></span><br>
+                        UPI : <span id="upi"></span>
+                    </div>
                 </div>
             </form>
             </div>
 
-            <footer>
-                
-            </footer>
 
 </div>
 
@@ -130,7 +131,9 @@ include ("connection.php");
     <script src="assets/plugins/select2/js/select2.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         $(document).ready(function(){
             $("#fetch-btn").on("click", function(e) {
@@ -149,8 +152,12 @@ include ("connection.php");
                     },
                     success:function(data){
                         // handle the response
-                        // console.log(data)
-                        $("#tbl-body").html(data);
+                        let data1 = jQuery.parseJSON(data)
+                        // console.log(data1)
+                        $("#tbl-body").html(data1[0]);
+                        $("#sum").html(data1[1]);
+                        $("#upi").html(data1[2]);
+                        $("#cash").html(data1[3]);
                     }
 
                 })

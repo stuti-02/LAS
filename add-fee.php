@@ -1,4 +1,9 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
 include("connection.php");
 $query_fee = "select * from tbl_fee_mgmt order by uploaded_date desc";
 $res_fee=mysqli_query($db_con,$query_fee);
@@ -58,15 +63,31 @@ $row_date = mysqli_fetch_array($res_date);
             <form method="post" action="add-fee-code.php">
                     <div class="page-header">
                         <div class="row align-items-center">
-                            <div class="col">
+                            <div class="col-sm-7">
                                 <h3 class="page-title">Add Fee</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index-2.php">Student /</a></li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                     <li class="active">Add Fee</li>
                                 </ul>
                             </div>
-                            <div class="col-auto text-end float-end ms-auto">
+                            <div class="col-sm-3 text-end float-end ms-auto">
                                 <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo $row_date[0]; ?>" readonly style="background: transparent;border:none"></a>
+                            </div>
+                            <div class="col-sm-2 text-end">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Show QR For Payment</button>
+
+                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                                <div class="offcanvas-header">
+                                    <h5 id="offcanvasRightLabel">Pay Here </h5>
+                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body text-center">
+                                    <img src="assets/img/logo-small.png" alt="" style="height:10rem;">
+                                    <h5 class="mt-3"><u>Softpro Library Hub</u></h5>
+
+                                    <img src="assets/img/payment-qr.jpeg" alt="Something went wrong" style="height:14rem; margin-top:3rem;">
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -128,14 +149,14 @@ $row_date = mysqli_fetch_array($res_date);
                                             <table class="table table-hover table-center mb-0 datatable">
                                                 <thead>
                                                     <tr>
-                                                        <th>S.No.</th>
-                                                        <th>Full Name</th>
-                                                        <th>Mobile Number</th>
-                                                        <th>Amount</th>
-                                                        <th>Payment Method</th>
-                                                        <th>Month Start</th>
-                                                        <th>Month End</th>
-                                                        <th>Status</th>
+                                                        <th class="text-center">S.No.</th>
+                                                        <th class="text-center">Full Name</th>
+                                                        <th class="text-center">Mobile Number</th>
+                                                        <th class="text-center">Amount</th>
+                                                        <th class="text-center">Payment Method</th>
+                                                        <th class="text-center">Month Start</th>
+                                                        <th class="text-center">Month End</th>
+                                                        <th class="text-center">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -148,15 +169,15 @@ $row_date = mysqli_fetch_array($res_date);
                                                     {
                                                     ?>
                                                         <tr>
-                                                            <td><?php echo $a; ?></td>
-                                                            <td><?php echo $row_fetch["name"]; ?></td>
-                                                            <td><?php echo $row_fetch["mobile"]; ?></td>
-                                                            <td><?php echo $row_fetch["amount"]; ?></td>
-                                                            <td><?php echo $row_fetch["pay_method"]; ?></td>
-                                                            <td><?php echo $row_fetch["month_start"]; ?></td>
-                                                            <td><?php echo $row_fetch["month_end"]; ?></td>
-                                                            <td>
-                                                                <button class="btn btn-warning text-light">Paid</button>
+                                                            <td class="text-center"><?php echo $a; ?></td>
+                                                            <td class="text-center"><?php echo $row_fetch["name"]; ?></td>
+                                                            <td class="text-center"><?php echo $row_fetch["mobile"]; ?></td>
+                                                            <td class="text-center"><?php echo $row_fetch["amount"]; ?></td>
+                                                            <td class="text-center"><?php echo $row_fetch["pay_method"]; ?></td>
+                                                            <td class="text-center"><?php echo $row_fetch["month_start"]; ?></td>
+                                                            <td class="text-center"><?php echo $row_fetch["month_end"]; ?></td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-rounded btn-outline-success">Paid</button>
                                                             </td>
                                                         </tr>
 
@@ -186,10 +207,6 @@ $row_date = mysqli_fetch_array($res_date);
 
 
             </div>
-
-            <footer>
-                
-            </footer>
 
         </div>
 

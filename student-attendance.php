@@ -1,4 +1,10 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
+
 $get_phone=$_POST["get_phone"];
 var_dump($get_phone);
 exit();
@@ -50,7 +56,7 @@ $query="select * from tbl_student_details";
                             <div class="col">
                                 <h3 class="page-title">Student's Attendance</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index-2.php">Dashboard /</a></li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                     <li class="active">Student's Attendance</li>
                                 </ul>
                             </div>
@@ -95,10 +101,6 @@ $query="select * from tbl_student_details";
                  
 
             </div>
-
-            <footer>
-                
-            </footer>
 
         </div>
 

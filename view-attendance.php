@@ -1,4 +1,10 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
+
 include("connection.php");
 $query="select tsd.name, tsd.mobile, tsd.pic, ta.status, ta.entry_time, ta.exit_time, ta.date from tbl_attendance as ta join tbl_student_details as tsd on ta.mobile=tsd.mobile where ta.date=CURRENT_DATE()";
 // echo $query;
@@ -48,7 +54,7 @@ $res=mysqli_query($db_con,$query);
                             <div class="col">
                                 <h3 class="page-title">View Attendance</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index-2.php">Dashboard /</a></li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                     <li class="active">View Attendance</li>
                                 </ul>
                             </div>
@@ -167,9 +173,7 @@ $res=mysqli_query($db_con,$query);
 
             </div>
 
-            <footer>
-                
-            </footer>
+           
 
         </div>
 

@@ -1,4 +1,10 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
+
 include ("connection.php");
 $query="select * from tbl_student_details ";
 $res = mysqli_query($db_con,$query);
@@ -54,7 +60,7 @@ $res = mysqli_query($db_con,$query);
                         <div class="col">
                             <h3 class="page-title">Mark Attendance</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index-2.php">Student /</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                 <li class="active">Mark Attendance</li>
                             </ul>
                         </div>
@@ -101,9 +107,6 @@ $res = mysqli_query($db_con,$query);
             </form>
             </div>
 
-            <footer>
-                
-            </footer>
 
 </div>
 

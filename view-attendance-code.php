@@ -33,10 +33,10 @@ if($res_date){
                     <a>". $row["name"]."<br><small><input type='text' name='get_phone' readonly value='". $row["mobile"] ."' style='border:none;'></small></a></h2> 
                     </td>";
 
-                    $query_attend = "select * from tbl_attendance as ta where ta.mobile='{$mobile}' order by ta.date desc";
+                    $query_attend = "select * from tbl_attendance as ta where ta.mobile='{$mobile}' and ta.date BETWEEN '$start_date' AND '$end_date' order by ta.date desc";
                     $res_qatted = mysqli_query($db_con, $query_attend);
                     while($row_attend = mysqli_fetch_assoc($res_qatted)){
-                        $output .= "<td>". $row_attend['entry_time'] . " || " . $row_attend['exit_time'] . "</td>";
+                        $output .= "<td><table class='table-bordered'><tr><td>". $row_attend['entry_time'] . " </td><td> " . $row_attend['exit_time'] . "</td></tr></table></td>";
                     }
 
                     $output .= "</tr>";
@@ -52,8 +52,5 @@ if($res_date){
 
 }
 
-
-
-// select * from tbl_attendance as ta join tbl_student_details as tsa on ta.mobile=tsa.mobile WHERE ta.date BETWEEN '$start_date' AND '$end_date'
 
 ?>

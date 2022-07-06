@@ -8,10 +8,10 @@ $res=mysqli_query($db_con,$query);
 
 if ($res)
 {
-header("Location:index.php?fee updated successfully");
+header("Location:dashboard.php?fee updated successfully");
 }
 else
 {
-header("Location:index.php? Something went wrong");
+header("Location:dashboard.php? Something went wrong");
 }
 ?>

@@ -1,4 +1,10 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
+
 include ("connection.php");
 $query="select * from tbl_fee_mgmt order by fee_id desc limit 1";
 $res=mysqli_query($db_con,$query);
@@ -79,8 +85,6 @@ $row = mysqli_fetch_array($res);
                 
                 
             </div>
-
-           
 
         </div>
 

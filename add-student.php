@@ -1,4 +1,10 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
+
 include("connection.php");
   $q_date = "select CURRENT_DATE()";
   $res_date = mysqli_query($db_con, $q_date);
@@ -65,20 +71,20 @@ include("connection.php");
                 </ul>
               </div>
               <div class="col-3 text-end">
-              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Show QR For Payment</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Show QR For Payment</button>
 
-              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-header">
-                  <h5 id="offcanvasRightLabel">Pay Here </h5>
-                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body text-center">
-                  <img src="assets/img/logo-small.png" alt="" style="height:10rem;">
-                  <h5 class="mt-3"><u>Softpro Library Hub</u></h5>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                  <div class="offcanvas-header">
+                    <h5 id="offcanvasRightLabel">Pay Here </h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-body text-center">
+                    <img src="assets/img/logo-small.png" alt="" style="height:10rem;">
+                    <h5 class="mt-3"><u>Softpro Library Hub</u></h5>
 
-                  <img src="assets/img/payment-qr.jpeg" alt="Something went wrong" style="height:14rem; margin-top:3rem;">
+                    <img src="assets/img/payment-qr.jpeg" alt="Something went wrong" style="height:14rem; margin-top:3rem;">
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>
@@ -248,6 +254,30 @@ include("connection.php");
               icon: 'error',
               title: 'Oops...',
               text: 'Try Again!'
+              })
+          </script>
+    <?php
+    }
+    elseif($msg=='3')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'error',
+              title: 'Image Error',
+              text: 'Choose Correct Image!'
+              })
+          </script>
+    <?php
+    }
+    elseif($msg=='4')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'error',
+              title: 'Format Error...',
+              text: 'Choose Correct Image Format'
               })
           </script>
     <?php

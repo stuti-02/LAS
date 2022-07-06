@@ -1,6 +1,13 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
 include ("connection.php");
-$query = "select * from tbl_fee join tbl_student_details on tbl_fee.mobile=tbl_student_details.mobile where tbl_student_details.status='true' order by tbl_fee.month_start desc";
+$query = "select * from tbl_fee_status as tf join tbl_student_details as tsd on tf.fs_mobile=tsd.mobile where tsd.status='true' order by tf.fs_month_end";
+echo $query;
+die();
 $res= mysqli_query($db_con,$query);
 
 
@@ -60,7 +67,7 @@ $row_date = mysqli_fetch_array($res_date);
                         <div class="col">
                             <h3 class="page-title">Students</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index-2.php">Dashboard /</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                 <li class="active">Students</li>
                             </ul>
                         </div>
@@ -95,28 +102,37 @@ $row_date = mysqli_fetch_array($res_date);
                                                 $a=1;
                                                 while($row=mysqli_fetch_array($res)) 
                                                 {
+                                                $monthend= $row["fs_month_end"];
+                                                $mend=date('Y-m-d',(strtotime ( '-2 day' , strtotime ( $monthend) ) ));
                                                 $Date= "$row[enroll_date]";
                                             ?>
-                                                <tr>
+                                                <tr class="border-2 <?php if($row_date[0]>$mend){ echo "border-danger"; }else{ echo "border-success"; }?>"> 
                                                     <td><?php echo $a; ?></td>
                                                    <td>SLH22<?Php echo $row["stu_id"]; ?></td>
                                                    <td><?php echo $row["name"]; ?></td>
                                                    <td><?php echo $row["mobile"]; ?></td>
                                                    <td><?php echo $row["email"]; ?></td>
-                                                   <td><?php echo $row["month_start"]; ?></td>
-                                                   <td><?php echo $row["month_end"]; ?></td>
-                                                   <td><input type="button" value="
+                                                   <td><?php echo $row["fs_month_start"]; ?></td>
+                                                   <td><?php echo $row["fs_month_end"]; ?></td>
+
+                                                   <td>
                                                    <?php
-                                                    if($row_date[0]>$row["month_end"])
+                                                    if($row_date[0]>$mend)
                                                     {
-                                                        echo "red";
+                                                        
+                                                        ?>
+                                                            <a href="send_mail.php?email=<?php echo $row["email"]; ?>" class="btn btn-rounded btn-outline-danger">Send Mail</a>
+                                                        <?php
                                                     }
                                                     else
                                                     {
-                                                        echo "green";
+                                                        ?>
+                                                        <button type="button" class="btn btn-rounded btn-outline-success">Green Zone</button>
+
+                                                        <?php
                                                     }
                                                    ?>
-                                                   ">
+                                               
                                                 </td>
                                                 </tr>
 
@@ -133,10 +149,6 @@ $row_date = mysqli_fetch_array($res_date);
                     </div>
                 </div>
             </div>
-
-            <footer>
-                <p>Copyright © 2020 Dreamguys.</p>
-            </footer>
 
         </div>
 

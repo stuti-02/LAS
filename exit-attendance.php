@@ -1,4 +1,9 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
 include("connection.php");
 $q_date = "select CURRENT_DATE()";
 $res_date = mysqli_query($db_con, $q_date);
@@ -54,7 +59,7 @@ $row_date = mysqli_fetch_array($res_date);
                             <div class="col">
                                 <h3 class="page-title">Exit Attendance</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index-2.php">Student's /</a></li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                     <li class="active">Exit Attendance</li>
                                 </ul>
                             </div>
@@ -102,9 +107,6 @@ $row_date = mysqli_fetch_array($res_date);
             </form>
             </div>
 
-            <footer>
-                
-            </footer>
 
         </div>
 

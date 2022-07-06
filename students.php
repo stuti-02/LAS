@@ -1,6 +1,12 @@
 <?php
+session_start();
+if($_SESSION['user']=='' or $_SESSION['user']==null){
+  header("location:index.php?msg=loginfirst");
+}
+
+
 include("connection.php");
-$query="select * from tbl_student_details where status='true' order by stu_id desc";
+$query="select * from tbl_student_details where status='T' order by stu_id desc";
 $res=mysqli_query($db_con,$query);
 ?>
 
@@ -43,7 +49,7 @@ $res=mysqli_query($db_con,$query);
                         <div class="col">
                             <h3 class="page-title">Students</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index-2.php">Dashboard /</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard /</a></li>
                                 <li class="active">Students</li>
                             </ul>
                         </div>
@@ -65,9 +71,9 @@ $res=mysqli_query($db_con,$query);
                                                 <th>S.No.</th>
                                                 <th>ID</th>
                                                 <th>Name</th>
-                                                <th>Mobile Number</th>
                                                 <th>Email</th>
                                                 <th>Fee</th>
+                                                <th>Enrolled On</th>
                                                 <th>Details</th>
                                                 <th class="text-end">Action</th>
                                             </tr>
@@ -82,10 +88,19 @@ $res=mysqli_query($db_con,$query);
                                                 <tr>
                                                     <td><?php echo $a; ?></td>
                                                     <td>SLH22<?php echo "$row[stu_id]"; ?></td>
-                                                    <td><?php echo "$row[name]";?></td>
-                                                    <td><?php echo "$row[mobile]"; ?></td>
+                                                    <td>
+                                                    <h2 class="table-avatar">
+                                                        <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
+                                                        <a><?php echo $row["name"]; ?>
+                                                        <br>
+                                                        <small><input type="text" name="get_phone" readonly value="<?php echo $row["mobile"];?>" style="border:none;"></small>
+                                                        
+                                                        </a>
+                                                    </h2>
+                                                    </td>
                                                     <td><?php echo "$row[email]"; ?></td>
                                                     <td><?php echo "$row[fee]"; ?></td>
+                                                    <td><?php echo "$row[enroll_date]"; ?></td>
                                                     <td><a href="student-details.php?id=<?php echo "$row[stu_id]"; ?>">View More</a></td>
                                                     <td class="text-end">
                                                         <div class="actions">
@@ -114,9 +129,7 @@ $res=mysqli_query($db_con,$query);
                 </div>
             </div>
 
-            <footer>
-                
-            </footer>
+          
 
         </div>
 
@@ -146,6 +159,18 @@ $res=mysqli_query($db_con,$query);
                 icon: 'success',
                 title: 'Deleted...',
                 text: 'Student Data Deleted Successfully!'
+                })
+            </script>
+        <?php
+        }
+        elseif($msg=='updated')
+        {
+        ?>
+            <script>
+                Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Data Updated Successfully!'
                 })
             </script>
         <?php
