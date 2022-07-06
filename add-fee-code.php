@@ -17,10 +17,11 @@ $nextmstart =date('Y-m-d',(strtotime ( '+1 day' , strtotime ( $monthend) ) ));
 $nextmend = date('Y-m-d', strtotime($nextmstart. ' +30 days'));
 
 
-$query = "select * from tbl_fee join tbl_student_details on tbl_fee.mobile=tbl_student_details.mobile where tbl_student_details.status='true' and tbl_fee.mobile='$mobile'";
+$query = "select * from tbl_fee join tbl_student_details on tbl_fee.mobile=tbl_student_details.mobile where tbl_student_details.status='T' and tbl_fee.mobile='$mobile'";
 $res = mysqli_query($db_con,$query);
 
-$query_mail = "select email from tbl_student_details where mobile='$mobile' and name='$name' and status='true'";
+$query_mail = "select email from tbl_student_details where mobile='$mobile' and status='T'";
+
 $res_mail = mysqli_query($db_con,$query_mail);
 $row_mail= mysqli_fetch_array($res_mail);
 $my_mail=$row_mail[0];
@@ -34,12 +35,10 @@ if(mysqli_num_rows($res)>0)
 
     $query_update = "update tbl_fee_status set fs_month_start='$nextmstart', fs_month_end='$nextmend', fs_amount='$amount' where fs_mobile='$mobile'";
 
-    // echo $query_update;
 
         if(mysqli_query($db_con,$query_in) and mysqli_query($db_con,$query_update))
         {
                         
-
 
             require 'PHPMailer/PHPMailerAutoload.php';
 

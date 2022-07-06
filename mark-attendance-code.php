@@ -2,7 +2,7 @@
 $date=$_POST['date'];
 
 include ("connection.php");
-$query="select mobile from tbl_student_details where status='true'";
+$query="select mobile from tbl_student_details where status='T'";
 $res = mysqli_query($db_con,$query);
 
 if(mysqli_num_rows($res)>0)

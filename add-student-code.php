@@ -33,7 +33,7 @@ $res1=mysqli_query($db_con,$query1);
 
     if(mysqli_num_rows($res1)>0)
     {
-        header("location:add-student.php?msg=3");
+        header("location:add-student.php?msg=5");
     }
     else
     {
@@ -42,7 +42,7 @@ $res1=mysqli_query($db_con,$query1);
             if(move_uploaded_file($pic_tmp, 'assets/stu_pic/'.$pic_name) and move_uploaded_file($aadhar_pic_tmp, 'assets/aadhar_pic/'.$aadhar_pic))
             {
 
-                $query="insert into tbl_student_details (name, mobile, email, gender, dob, pic,aadhar,aadhar_pic,fee,pay_method, present_address, permanent_address, enroll_date,status) values ('$name','$mobile','$email','$gender','$dob','$pic_name','$aadhar','$aadhar_pic','$fee','$pay_method','$present_address', '$permanent_address', '$enroll_date','true')";
+                $query="insert into tbl_student_details (name, mobile, email, gender, dob, pic,aadhar,aadhar_pic,fee,pay_method, present_address, permanent_address, enroll_date,status) values ('$name','$mobile','$email','$gender','$dob','$pic_name','$aadhar','$aadhar_pic','$fee','$pay_method','$present_address', '$permanent_address', '$enroll_date','T')";
                 
                  $query2="insert into tbl_fee (mobile,month_start,month_end,amount,payment_date,pay_via) values ('$mobile','$enroll_date','$month_end','$fee',CURRENT_DATE(),'$pay_method')";
                  

@@ -99,7 +99,8 @@
 
                 <ul>
                   <li><a href="add-fee.php">Add Fee</a></li>
-                  <li><a href="fee_list.php">Student's List</a></li>
+                  <li><a href="fee_status.php">Student's Status</a></li>
+                  <li><a href="fee_record.php">Fee Record</a></li>
                 </ul>
               </li>
               <li class="submenu">

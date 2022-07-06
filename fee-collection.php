@@ -75,7 +75,7 @@ include ("connection.php");
                                         <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="end_date" value="<?php echo $row_date[0]; ?>" id="end-date" style="background: transparent;border:none"></div>
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto">
-                                        <input type="button" class="btn btn-outline-primary me-2" id="fetch-btn" value="Fetch Students"/>
+                                        <input type="button" class="btn btn-outline-primary me-2" id="fetch-btn" value="Fetch Record"/>
                                 </div>
                         
                     </div>

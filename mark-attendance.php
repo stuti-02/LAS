@@ -8,6 +8,11 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 include ("connection.php");
 $query="select * from tbl_student_details ";
 $res = mysqli_query($db_con,$query);
+
+$q_date = "select CURRENT_DATE()";
+$res_date = mysqli_query($db_con, $q_date);
+$row_date = mysqli_fetch_array($res_date);
+
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +91,7 @@ $res = mysqli_query($db_con,$query);
                                         <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo date("Y-m-d"); ?>" readonly style="background: transparent;border:none"></div>
+                                                        <div class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="date" value="<?php echo $row_date[0]; ?>" readonly style="background: transparent;border:none"></div>
                                                     </td>
                                                     <td>
                                                     <div class="col-12">

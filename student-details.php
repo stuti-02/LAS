@@ -13,7 +13,7 @@ $row_date = mysqli_fetch_array($res_date);
 
 $get_id=$_REQUEST['id'];
 
-$query="select * from tbl_student_details where stu_id='$get_id' and status='true'";
+$query="select * from tbl_student_details where stu_id='$get_id' and status='T'";
 $res=mysqli_query($db_con,$query);
 $row=mysqli_fetch_array($res);
 
@@ -143,7 +143,6 @@ $res_att = mysqli_query($db_con,$query_att);
                                             <th class="text-center">Amount</th>
                                             <th class="text-center">Method</th>
                                             <th class="text-center">Payment Date</th>
-                                            <th class="text-center">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -172,22 +171,7 @@ $res_att = mysqli_query($db_con,$query_att);
                                                     <?php echo "$row_fee[payment_date]"; ?>
                                                 </td>
 
-                                                <td class="text-center">
-                                                    <?php
-                                                        if($row_fee["month_end"]>$row_date[0])
-                                                        {
-                                                        ?>
-                                                            <button type="button" class="btn btn-rounded btn-outline-success">Paid</button>
-                                                        <?php
-                                                        }
-                                                        else
-                                                        {
-                                                        ?>
-                                                            
-                                                        <?php
-                                                        }
-                                                    ?>
-                                                </td>
+                                                
                                         </tr>
 
                                         <?php

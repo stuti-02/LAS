@@ -282,6 +282,18 @@ include("connection.php");
           </script>
     <?php
     }
+    elseif($msg=='5')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'error',
+              title: 'Oops..',
+              text: 'Already Enrolled!'
+              })
+          </script>
+    <?php
+    }
     else
     {
     ?>

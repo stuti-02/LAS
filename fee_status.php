@@ -5,9 +5,8 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 }
 
 include ("connection.php");
-$query = "select * from tbl_fee_status as tf join tbl_student_details as tsd on tf.fs_mobile=tsd.mobile where tsd.status='true' order by tf.fs_month_end";
-echo $query;
-die();
+$query = "select * from tbl_fee_status as tf join tbl_student_details as tsd on tf.fs_mobile= tsd. mobile where tsd.status='T' order by tf.fs_month_end";
+
 $res= mysqli_query($db_con,$query);
 
 
@@ -72,7 +71,7 @@ $row_date = mysqli_fetch_array($res_date);
                             </ul>
                         </div>
                         <div class="col-auto text-end float-end ms-auto">
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                            <!-- <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a> -->
                             <a href="add-student.php" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
@@ -106,6 +105,7 @@ $row_date = mysqli_fetch_array($res_date);
                                                 $mend=date('Y-m-d',(strtotime ( '-2 day' , strtotime ( $monthend) ) ));
                                                 $Date= "$row[enroll_date]";
                                             ?>
+                                                
                                                 <tr class="border-2 <?php if($row_date[0]>$mend){ echo "border-danger"; }else{ echo "border-success"; }?>"> 
                                                     <td><?php echo $a; ?></td>
                                                    <td>SLH22<?Php echo $row["stu_id"]; ?></td>

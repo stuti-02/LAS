@@ -92,7 +92,6 @@ $res=mysqli_query($db_con,$query);
                                                     <th>Date</th>
                                                     <th>Clock-In Time</th>
                                                     <th>Clock-Out Time</th>
-                                                    <th>Details</th>
                                                 </tr>
                                             </thead>
                                             <tbody >
@@ -152,9 +151,7 @@ $res=mysqli_query($db_con,$query);
                                                         ?>
                                                     </td>
 
-                                                    <td>
-                                                        <a href="student-attendance.php"><button type="button" class="btn btn-rounded btn-outline-warning">View All</button></a>
-                                                    </td>
+                                                
                                                 </tr>  
                                                 
                                                 <?php

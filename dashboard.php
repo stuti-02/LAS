@@ -6,15 +6,15 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 }
 
 include ("connection.php");
-$query_stu = "select count(name) from tbl_student_details where status='true'";
+$query_stu = "select count(name) from tbl_student_details where status='T'";
 $res_stu=mysqli_query($db_con,$query_stu);
 $row_stu=mysqli_fetch_array($res_stu);
 
-$query_male="select count(name) from tbl_student_details where gender='male' and status='true'";
+$query_male="select count(name) from tbl_student_details where gender='male' and status='T'";
 $res_male = mysqli_query($db_con,$query_male);
 $row_male= mysqli_fetch_array($res_male);
 
-$query_female="select count(name) from tbl_student_details where gender='female' and status='true'";
+$query_female="select count(name) from tbl_student_details where gender='female' and status='T'";
 $res_female = mysqli_query($db_con,$query_female);
 $row_female= mysqli_fetch_array($res_female);
 
@@ -22,7 +22,7 @@ $query_present = "select count(mobile) from tbl_attendance where date=CURRENT_DA
 $res_present=mysqli_query($db_con,$query_present);
 $row_present=mysqli_fetch_array($res_present);
 
-$query_fee = "select * from tbl_student_details join tbl_fee on tbl_student_details.mobile=tbl_fee.mobile where tbl_student_details.status='true' order by tbl_fee.fee_id desc limit 5";
+$query_fee = "select * from tbl_student_details join tbl_fee on tbl_student_details.mobile=tbl_fee.mobile where tbl_student_details.status='T' order by tbl_fee.fee_id desc limit 5";
 $res_fee = mysqli_query($db_con,$query_fee);
 
 
@@ -121,7 +121,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                     </div>
                     <div class="db-info">
                       <h3 class="text-end"><?php echo $row_stu[0]; ?></h3>
-                      <h6>Total Students</h6>
+                      <h6 class="text-end">Total Students</h6>
                     </div>
                   </div>
                 </div>
@@ -138,7 +138,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                     </div>
                     <div class="db-info">
                       <h3 class="text-end"><?php echo $row_male[0]; ?></h3>
-                      <h6>Male Students</h6>
+                      <h6 class="text-end">Male Students</h6>
                     </div>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                     </div>
                     <div class="db-info">
                       <h3 class="text-end"><?php echo $row_female[0]; ?></h3>
-                      <h6>Female Students</h6>
+                      <h6 class="text-end">Female Students</h6>
                     </div>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                     </div>
                     <div class="db-info">
                       <h3 class="text-end"><?Php echo $row_present[0]; ?></h3>
-                      <h6>Today Present Students</h6>
+                      <h6 class="text-end">Today Present Students</h6>
                     </div>
                   </div>
                 </div>

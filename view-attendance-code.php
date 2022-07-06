@@ -19,7 +19,7 @@ if($res_date){
         }
         $output .= "</tr>";
 
-        $query= "select * from tbl_student_details where status='true'";
+        $query= "select * from tbl_student_details where status='T'";
         $res = mysqli_query($db_con, $query);
 
         if($res)

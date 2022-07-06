@@ -6,7 +6,7 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 
 
 include("connection.php");
-$query="select * from tbl_student_details where status='T' order by stu_id desc";
+$query="select * from tbl_student_details as tsd join tbl_fee as tf where tsd.status='T' order by tf.month_start desc";
 $res=mysqli_query($db_con,$query);
 ?>
 
@@ -17,7 +17,7 @@ $res=mysqli_query($db_con,$query);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Softpro Library Hub : : Students List</title>
+    <title>Softpro Library Hub : : Student's Fee Record</title>
 
     <link rel="shortcut icon" href="assets/img/favicon.png">
 
@@ -68,13 +68,14 @@ $res=mysqli_query($db_con,$query);
                                     <table class="table table-hover table-center mb-0 datatable">
                                         <thead>
                                             <tr>
-                                                <th>S.No.</th>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Enrolled On</th>
-                                                <th>Details</th>
-                                                <th class="text-end">Action</th>
+                                                <th class="text-center">S.No.</th>
+                                                <th class="text-center">ID</th>
+                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Month Start</th>
+                                                <th class="text-center">Month End</th>
+                                                <th class="text-center">Amount</th>
+                                                <th class="text-center">Payment Method</th>
+                                                <th class="text-center">Payment Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -85,8 +86,8 @@ $res=mysqli_query($db_con,$query);
                                                 {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $a; ?></td>
-                                                    <td>SLH22<?php echo "$row[stu_id]"; ?></td>
+                                                    <td class="text-center"><?php echo $a; ?></td>
+                                                    <td class="text-center">SLH22<?php echo "$row[stu_id]"; ?></td>
                                                     <td>
                                                     <h2 class="table-avatar">
                                                         <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
@@ -97,19 +98,12 @@ $res=mysqli_query($db_con,$query);
                                                         </a>
                                                     </h2>
                                                     </td>
-                                                    <td><?php echo "$row[email]"; ?></td>
-                                                    <td><?php echo "$row[enroll_date]"; ?></td>
-                                                    <td><a href="student-details.php?id=<?php echo "$row[stu_id]"; ?>">View More</a></td>
-                                                    <td class="text-end">
-                                                        <div class="actions">
-                                                            <a href="update-student.php?get_id=<?php echo "$row[stu_id]"; ?>" class="btn btn-sm bg-success-light me-2">
-                                                                <i class="fas fa-pen"></i>
-                                                            </a>
-                                                            <a href="delete-student.php?get_id=<?php echo "$row[stu_id]"; ?>" class="btn btn-sm bg-danger-light">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
+                                                    <td class="text-center"><?php echo "$row[month_start]"; ?></td>
+                                                    <td class="text-center"><?php echo "$row[month_end]"; ?></td>
+                                                    <td class="text-center"><?php echo "$row[amount]"; ?></td>
+                                                    <td class="text-center"><?php echo "$row[pay_via]"; ?></td>
+                                                    <td class="text-center"><?php echo "$row[payment_date]"; ?></td>
+                                                    
                                                 </tr>
 
                                             <?php
@@ -145,49 +139,7 @@ $res=mysqli_query($db_con,$query);
     <script src="assets/js/script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <?php
-    if(isset($_REQUEST["msg"]))
-    {
-        $msg=$_REQUEST["msg"];
-        if($msg=='1')
-        {
-        ?>
-            <script>
-                Swal.fire({
-                icon: 'success',
-                title: 'Deleted...',
-                text: 'Student Data Deleted Successfully!'
-                })
-            </script>
-        <?php
-        }
-        elseif($msg=='updated')
-        {
-        ?>
-            <script>
-                Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Data Updated Successfully!'
-                })
-            </script>
-        <?php
-        }
-        else
-        {
-        ?>
-            <script>
-                Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Try Again!'
-                })
-            </script>
-        <?php
-        }
-
-    }
-    ?>
+    
 
 
 </body>
