@@ -112,31 +112,6 @@ $res = mysqli_query($db_con,$query);
                 </form>
 
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card card-table">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-center mb-0 datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>S.No.</th>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Mobile Number</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            
-                                           
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                
             </form>

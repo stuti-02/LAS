@@ -5761,6 +5761,11 @@ table.table-inbox tbody tr.checked {
 	.header .header-left .logo {
 		display: none;
 	}
+	/* .header .header-left .logo .main-heading
+	{
+		color: #e67817;
+	} */
+
 	.header-left .logo.logo-small {
 		display: inline-block;
 		left: 50%;

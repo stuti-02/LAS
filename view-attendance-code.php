@@ -15,7 +15,7 @@ $res_date = mysqli_query($db_con, $q_date);
 if($res_date){
      $output .= "<tr><th>Name</th>";
         while($row_date = mysqli_fetch_array($res_date)){
-            $output  .= "<th>".$row_date[0]."</th>";
+            $output  .= "<th class='ps-5'>".$row_date[0]."</th>";
         }
         $output .= "</tr>";
 
@@ -36,7 +36,21 @@ if($res_date){
                     $query_attend = "select * from tbl_attendance as ta where ta.mobile='{$mobile}' and ta.date BETWEEN '$start_date' AND '$end_date' order by ta.date desc";
                     $res_qatted = mysqli_query($db_con, $query_attend);
                     while($row_attend = mysqli_fetch_assoc($res_qatted)){
-                        $output .= "<td><table class='table-bordered'><tr><td>". $row_attend['entry_time'] . " </td><td> " . $row_attend['exit_time'] . "</td></tr></table></td>";
+                        
+                        // $output .= "<td><table class='table-bordered'><tr><td>". $row_attend['entry_time'] . " </td><td> " . $row_attend['exit_time'] . "</td></tr></table></td>";
+                        
+                        if($row_attend["status"]=='Absent'){
+                            $output .= "<td><table class='table-bordered'><tr><td> Absent </td><td>Absent</td></tr></table></td>";
+                        }else{
+                            $output .= "<td><table class='table-bordered'><tr><td> ".$row_attend['entry_time']." </td><td>";
+                            if($row_attend["exit_time"]==''){
+                                $output .= "Not Marked";
+                            }else{
+                                $output .= $row_attend["exit_time"];
+                            }
+                            $output .= "</td></tr></table></td>";
+                        }
+                                                        
                     }
 
                     $output .= "</tr>";

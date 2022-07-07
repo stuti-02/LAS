@@ -5,7 +5,23 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 }
 
 include ("connection.php");
+$query = "select * from tbl_fee where payment_date=CURRENT_DATE";
+$res=mysqli_query($db_con,$query);
+
+$sum=0;
+
+$query_cash = "select * from tbl_fee where payment_date=CURRENT_DATE and pay_via='cash'";
+$res_cash=mysqli_query($db_con,$query_cash);
+
+$sum_cash = 0;
+
+$query_upi = "select * from tbl_fee where payment_date=CURRENT_DATE and pay_via='upi'";
+$res_upi=mysqli_query($db_con,$query_upi);
+
+$sum_upi = 0;
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
  
@@ -91,22 +107,57 @@ include ("connection.php");
                                 <div class="table-responsive">
                                     <table class="table table-hover table-center mb-0 datatable"  id="tbl-body">
                                         <tr>
+                                            <th>S.No.</th>
                                             <th>Date</th>
                                             <th>Amount</th>
                                             <th>Payment Method</th>
                                         </tr>
-                                        <tr>
-                                            <td colspan="3">No Data Found</td>
-                                        </tr>
+                                        <?php
+                                            $a=1;
+                                            while($row = mysqli_fetch_array($res))
+                                            {
+                                                $sum+=$row["amount"];
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $a; ?></td>
+                                                <td><?php echo $row["payment_date"]; ?></td>
+                                                <td><?php echo $row["amount"]; ?></td>
+                                                <td><?php echo $row["pay_via"]; ?></td>
+                                            </tr>
+                                        <?php    
+                                            $a++;    
+                                            } 
+                                        ?>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-5 border py-3" style="height:12rem;">
-                        <h5>Total Received Amount is : <span id="sum"></span></h5> <br>
-                        Cash : <span id="cash"></span><br>
-                        UPI : <span id="upi"></span>
+                        <h5>Total Received Amount is : <span id="sum">
+                            <?php 
+                            echo "$sum";
+                            ?>
+                        </span></h5> <br>
+
+                        Cash : <span id="cash">
+                            <?php 
+                            while($row_cash = mysqli_fetch_array($res_cash))
+                            {
+                                $sum_cash+=$row_cash["amount"];
+                            } 
+                            echo "$sum_cash";
+                            ?>
+                        </span><br>
+                        UPI : <span id="upi">
+                            <?php 
+                            while($row_upi = mysqli_fetch_array($res_upi))
+                            {
+                                $sum_upi+=$row_upi["amount"];
+                            } 
+                            echo "$sum_upi";
+                            ?>
+                        </span>
                     </div>
                 </div>
             </form>

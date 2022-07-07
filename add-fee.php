@@ -133,7 +133,7 @@ $row_date = mysqli_fetch_array($res_date);
             
 
             <?php
-            $query_fetch = "select * from tbl_student_details join tbl_fee on tbl_student_details.mobile=tbl_fee.mobile where tbl_student_details.status='true' order by tbl_fee.fee_id desc limit 10";
+            $query_fetch = "select * from tbl_student_details join tbl_fee on tbl_student_details.mobile=tbl_fee.mobile where tbl_student_details.status='T' order by tbl_fee.fee_id desc limit 10";
             $res_fetch = mysqli_query($db_con,$query_fetch);
             ?>
 

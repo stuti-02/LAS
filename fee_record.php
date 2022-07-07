@@ -6,7 +6,7 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 
 
 include("connection.php");
-$query="select * from tbl_student_details as tsd join tbl_fee as tf where tsd.status='T' order by tf.month_start desc";
+$query="select * from tbl_fee as tf join tbl_student_details as tsd  on tsd.mobile=tf.mobile where tf.payment_date=CURRENT_DATE() order by tf.payment_date desc";
 $res=mysqli_query($db_con,$query);
 ?>
 
@@ -53,10 +53,23 @@ $res=mysqli_query($db_con,$query);
                                 <li class="active">Students</li>
                             </ul>
                         </div>
-                        <div class="col-auto text-end float-end ms-auto">
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                            <a href="add-student.php" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                        </div>
+                            
+                            <?php
+                            $q_date = "select CURRENT_DATE()";
+                            $res_date = mysqli_query($db_con, $q_date);
+                            $row_date = mysqli_fetch_array($res_date);
+                            ?>
+
+                                <div class="col-auto text-end float-end ms-auto">
+                                    <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="start_date" value="<?php echo $row_date[0]; ?>" id="start-date" style="background: transparent;border:none">
+                                    </div>
+                                </div>
+                                <div class="col-auto text-end float-end ms-auto">
+                                        <div href="#" class="btn btn-outline-primary me-2"><i class="fas fa-calendar"></i> <input type="text" name="end_date" value="<?php echo $row_date[0]; ?>" id="end-date" style="background: transparent;border:none"></div>
+                                </div>
+                                <div class="col-auto text-end float-end ms-auto">
+                                        <input type="button" class="btn btn-outline-primary me-2" id="fetch-btn" value="Fetch Record"/>
+                                </div>
                     </div>
                 </div>
 
@@ -65,12 +78,11 @@ $res=mysqli_query($db_con,$query);
                         <div class="card card-table">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-center mb-0 datatable">
+                                    <table class="table table-hover table-center mb-0 datatable" id="tbl-body">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">S.No.</th>
-                                                <th class="text-center">ID</th>
-                                                <th class="text-center">Name</th>
+                                                <th class="ps-5">Name</th>
                                                 <th class="text-center">Month Start</th>
                                                 <th class="text-center">Month End</th>
                                                 <th class="text-center">Amount</th>
@@ -80,37 +92,32 @@ $res=mysqli_query($db_con,$query);
                                         </thead>
                                         <tbody>
                                             
-                                            <?php
-                                                $a=1;
-                                                while($row=mysqli_fetch_array($res)) 
-                                                {
+                                           <?php
+                                           $a1=1;
+                                            while($row=mysqli_fetch_array($res))
+                                            {
                                             ?>
                                                 <tr>
-                                                    <td class="text-center"><?php echo $a; ?></td>
-                                                    <td class="text-center">SLH22<?php echo "$row[stu_id]"; ?></td>
+                                                    <td class="text-center"><?php echo $a1; ?></td>
                                                     <td>
-                                                    <h2 class="table-avatar">
+                                                        <h2 class="table-avatar">
                                                         <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
                                                         <a><?php echo $row["name"]; ?>
                                                         <br>
-                                                        <small><input type="text" name="get_phone" readonly value="<?php echo $row["mobile"];?>" style="border:none;background-color: transparent;"></small>
-                                                        
+                                                        <small><input type="text" name="get_phone" readonly value="<?php echo $row["mobile"];?>" style="border:none;background: transparent;"></small>
                                                         </a>
-                                                    </h2>
+                                                        </h2>
                                                     </td>
-                                                    <td class="text-center"><?php echo "$row[month_start]"; ?></td>
-                                                    <td class="text-center"><?php echo "$row[month_end]"; ?></td>
-                                                    <td class="text-center"><?php echo "$row[amount]"; ?></td>
-                                                    <td class="text-center"><?php echo "$row[pay_via]"; ?></td>
-                                                    <td class="text-center"><?php echo "$row[payment_date]"; ?></td>
-                                                    
+                                                    <td class="text-center"><?php echo $row["month_start"]; ?></td>
+                                                    <td class="text-center"><?php echo $row["month_end"]; ?></td>
+                                                    <td class="text-center"><?php echo $row["amount"]; ?></td>
+                                                    <td class="text-center"><?php echo $row["pay_via"]; ?></td>
+                                                    <td class="text-center"><?php echo $row["payment_date"]; ?></td>
                                                 </tr>
-
                                             <?php
-                                                $a++;
-                                                }
-                                                
-                                            ?>
+                                            $a1++;
+                                            }
+                                           ?>
                                             
                                         </tbody>
                                     </table>
@@ -138,8 +145,36 @@ $res=mysqli_query($db_con,$query);
 
     <script src="assets/js/script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-    
+    <script>
+        $(document).ready(function(){
+            $("#fetch-btn").on("click", function(e) {
+                e.preventDefault();
+
+                let sdate = $("#start-date").val();
+                let edate = $("#end-date").val();
+
+
+                $.ajax({
+                    url:"fee-record-code.php",
+                    type:"post",
+                    data:{sd:sdate, ed:edate},
+                    beforeSend:function(){
+                        console.log("loading...")
+                    },
+                    success:function(data){
+                        // handle the response
+                        // console.log(data)
+                        $("#tbl-body").html(data);
+                    }
+
+                })
+
+               
+            })
+        })
+    </script>
 
 
 </body>

@@ -27,7 +27,7 @@ $aadhar_pic = $name."-".$aadhar_pic_temp;
 $month_end = date('Y-m-d', strtotime($enroll_date. ' +30 days'));
 
 
-$query1 = "select * from tbl_student_details where mobile='$mobile' and status='true'";
+$query1 = "select * from tbl_student_details where mobile='$mobile' and status='T'";
 
 $res1=mysqli_query($db_con,$query1);
 

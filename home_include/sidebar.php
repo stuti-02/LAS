@@ -1,7 +1,7 @@
     <div class="header">
         <div class="header-left">
           <a href="index.php" class="logo">
-            <img src="assets/img/logo-small.png" alt="Logo"/><span class="ms-4">Softpro Library Hub</span>
+            <img src="assets/img/logo-small.png" alt="Logo"/><span class="ms-4 ps-1" style="color:#e67817;text-shadow:none;font-weight:bold;">Softpro Library Hub</span>
           </a>
           <a href="index.php" class="logo logo-small">
             <img

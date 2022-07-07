@@ -53,7 +53,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
 }
 
 
-
+$fee_sum = "select * from tbl_fee ";
 
     
 ?>
@@ -134,7 +134,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                     class="db-widgets d-flex justify-content-between align-items-center"
                   >
                     <div class="db-icon">
-                      <i class="fas fa-crown"></i>
+                      <i class="fa fa-user"></i>
                     </div>
                     <div class="db-info">
                       <h3 class="text-end"><?php echo $row_male[0]; ?></h3>
@@ -151,7 +151,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                     class="db-widgets d-flex justify-content-between align-items-center"
                   >
                     <div class="db-icon">
-                      <i class="fas fa-building"></i>
+                      <i class="fa fa-user"></i>
                     </div>
                     <div class="db-info">
                       <h3 class="text-end"><?php echo $row_female[0]; ?></h3>
@@ -168,7 +168,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                     class="db-widgets d-flex justify-content-between align-items-center"
                   >
                     <div class="db-icon">
-                      <i class="fas fa-file-invoice-dollar"></i>
+                      <i class="fa fa-users"></i>
                     </div>
                     <div class="db-info">
                       <h3 class="text-end"><?Php echo $row_present[0]; ?></h3>
@@ -413,10 +413,10 @@ $(document).ready(function() {
 		}],
 		labels: [     
       <?php
-    while($row_date = mysqli_fetch_array($res_date)){
+      while($row_date = mysqli_fetch_array($res_date)){
       echo "'".$row_date['date']."',";
-    }    
-    ?>
+      }    
+      ?>
     ],
 		xaxis: {
 			labels: {

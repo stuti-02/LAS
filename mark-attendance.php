@@ -148,6 +148,18 @@ $row_date = mysqli_fetch_array($res_date);
         </script>
     <?php
     }
+    elseif($msg=='marked')
+    {
+    ?>
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Attendance Already Marked!'
+            })
+        </script>
+    <?php
+    }
     else
     {
     ?>

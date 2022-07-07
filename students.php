@@ -54,7 +54,7 @@ $res=mysqli_query($db_con,$query);
                             </ul>
                         </div>
                         <div class="col-auto text-end float-end ms-auto">
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                            <!-- <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a> -->
                             <a href="add-student.php" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
@@ -68,12 +68,12 @@ $res=mysqli_query($db_con,$query);
                                     <table class="table table-hover table-center mb-0 datatable">
                                         <thead>
                                             <tr>
-                                                <th>S.No.</th>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Enrolled On</th>
-                                                <th>Details</th>
+                                                <th class="text-center">S.No.</th>
+                                                <th class="text-center">ID</th>
+                                                <th class="ps-5">Name</th>
+                                                <th class="text-center">Email</th>
+                                                <th class="text-center">Enrolled On</th>
+                                                <th class="text-center">Details</th>
                                                 <th class="text-end">Action</th>
                                             </tr>
                                         </thead>
@@ -85,8 +85,8 @@ $res=mysqli_query($db_con,$query);
                                                 {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $a; ?></td>
-                                                    <td>SLH22<?php echo "$row[stu_id]"; ?></td>
+                                                    <td class="text-center"><?php echo $a; ?></td>
+                                                    <td class="text-center">SLH22<?php echo "$row[stu_id]"; ?></td>
                                                     <td>
                                                     <h2 class="table-avatar">
                                                         <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
@@ -97,9 +97,9 @@ $res=mysqli_query($db_con,$query);
                                                         </a>
                                                     </h2>
                                                     </td>
-                                                    <td><?php echo "$row[email]"; ?></td>
-                                                    <td><?php echo "$row[enroll_date]"; ?></td>
-                                                    <td><a href="student-details.php?id=<?php echo "$row[stu_id]"; ?>">View More</a></td>
+                                                    <td class="text-center"><?php echo "$row[email]"; ?></td>
+                                                    <td class="text-center"><?php echo "$row[enroll_date]"; ?></td>
+                                                    <td class="text-center"><a href="student-details.php?id=<?php echo "$row[stu_id]"; ?>">View More</a></td>
                                                     <td class="text-end">
                                                         <div class="actions">
                                                             <a href="update-student.php?get_id=<?php echo "$row[stu_id]"; ?>" class="btn btn-sm bg-success-light me-2">

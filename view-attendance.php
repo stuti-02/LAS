@@ -6,7 +6,7 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 
 
 include("connection.php");
-$query="select tsd.name, tsd.mobile, tsd.pic, ta.status, ta.entry_time, ta.exit_time, ta.date from tbl_attendance as ta join tbl_student_details as tsd on ta.mobile=tsd.mobile where ta.date=CURRENT_DATE()";
+$query="select tsd.name, tsd.mobile, tsd.pic, ta.status, ta.entry_time, ta.exit_time, ta.date from tbl_attendance as ta join tbl_student_details as tsd on ta.mobile=tsd.mobile where ta.date=CURRENT_DATE() order by exit_time desc";
 // echo $query;
 // exit();
 $res=mysqli_query($db_con,$query);
@@ -88,10 +88,10 @@ $res=mysqli_query($db_con,$query);
                                         <table class="table table-hover table-center mb-0 datatable" id="tbl-body">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Date</th>
-                                                    <th>Clock-In Time</th>
-                                                    <th>Clock-Out Time</th>
+                                                    <th class="ps-5">Name</th>
+                                                    <th class="text-center">Date</th>
+                                                    <th class="text-center">Clock-In Time</th>
+                                                    <th class="text-center">Clock-Out Time</th>
                                                 </tr>
                                             </thead>
                                             <tbody >
@@ -105,19 +105,18 @@ $res=mysqli_query($db_con,$query);
                                                         <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/stu_pic/<?php echo $row['pic'] ?>" alt="User Image"></a>
                                                         <a><?php echo $row["name"]; ?>
                                                         <br>
-                                                        <small><input type="text" name="get_phone" readonly value="<?php echo $row["mobile"];?>" style="border:none;"></small>
-                                                        
+                                                        <small><input type="text" name="get_phone" readonly value="<?php echo $row["mobile"];?>" style="border:none;background: transparent;"></small>
                                                         </a>
                                                         </h2>
                                                     </td>
 
-                                                    <td>
+                                                    <td class="text-center">
                                                         <?php
                                                         echo $row['date'];
                                                         ?>
                                                     </td>
 
-                                                    <td>
+                                                    <td class="text-center">
                                                         <?php
                                                             if($row["status"]=='Absent'){
                                                         ?>
@@ -131,7 +130,7 @@ $res=mysqli_query($db_con,$query);
                                                         ?>
                                                     </td>
 
-                                                    <td>
+                                                    <td class="text-center">
                                                         <?php
                                                         if($row["status"]=='Present'){
                                                             if($row["exit_time"]==''){

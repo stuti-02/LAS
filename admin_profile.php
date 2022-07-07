@@ -65,9 +65,9 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
                                     <div class="about-text">Lucknow, Uttar Pradesh 226006</div>
                                 </div>
                                 <div class="col-auto profile-btn">
-                                    <a href="#" class="btn btn-primary">
+                                    <!-- <a href="#" class="btn btn-primary">
                                         Edit
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
