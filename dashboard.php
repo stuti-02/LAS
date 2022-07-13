@@ -53,8 +53,6 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
 }
 
 
-$fee_sum = "select * from tbl_fee ";
-
     
 ?>
 

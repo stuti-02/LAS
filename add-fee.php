@@ -225,7 +225,24 @@ $row_date = mysqli_fetch_array($res_date);
     <script src="assets/js/script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+    <?php
+    if(isset($_REQUEST["msg"]))
+    {
+    $msg=$_REQUEST["msg"];
+    if($msg=='user-error')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Student Not Registered!'
+              })
+          </script>
+    <?php
+    }
+    }
+    ?>
 
   </body>
 

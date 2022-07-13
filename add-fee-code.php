@@ -63,13 +63,13 @@ if(mysqli_num_rows($res)>0)
             $mail->Subject = 'Fee Submitted Succesfully';
             $mail->Body    = $bodyContent;
 
-            if($mail->Send()){
-            // echo "Success";
-            header("location:add-fee.php?msg=success");
-            }else{
-                header("location:add-fee.php?msg=mailerror");
+            //if($mail->Send()){
+            header("location:invoice.php?msg=success");
+            //}
+            //else{
+                //header("location:add-fee.php?msg=mailerror");
                 
-            }
+           // }
         }
         else
         {
