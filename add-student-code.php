@@ -43,14 +43,25 @@ $res1=mysqli_query($db_con,$query1);
             {
 
                 $query="insert into tbl_student_details (name, mobile, email, gender, dob, pic,aadhar,aadhar_pic,fee,pay_method, present_address, permanent_address, enroll_date,status) values ('$name','$mobile','$email','$gender','$dob','$pic_name','$aadhar','$aadhar_pic','$fee','$pay_method','$present_address', '$permanent_address', '$enroll_date','T')";
-                
-                 $query2="insert into tbl_fee (mobile,month_start,month_end,amount,payment_date,pay_via) values ('$mobile','$enroll_date','$month_end','$fee',CURRENT_DATE(),'$pay_method')";
-                 
-                 $query3="insert into tbl_fee_status (fs_mobile,fs_month_start,fs_month_end,fs_amount) values ('$mobile','$enroll_date','$month_end','$fee')";
                     
-                 if(mysqli_query($db_con,$query2) and mysqli_query($db_con,$query) and mysqli_query($db_con,$query3))
+                 if( mysqli_query($db_con,$query))
                     {
-                        header("location:add-student.php?msg=1");
+                        
+                        $query2="insert into tbl_fee (mobile,month_start,month_end,amount,payment_date,pay_via) values ('$mobile','$enroll_date','$month_end','$fee',CURRENT_DATE(),'$pay_method')";
+                        
+                        $query3="insert into tbl_fee_status (fs_mobile,fs_month_start,fs_month_end,fs_amount,pay_via,payment_date,stu_status) values ('$mobile','$enroll_date','$month_end','$fee','$pay_method',CURRENT_DATE(),'T')";
+                        if(mysqli_query($db_con,$query2) and mysqli_query($db_con,$query3)){
+                        ?>    
+                        <script>
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Success...',
+                            text: 'Student Enrolled Successfully!'
+                            })
+                        </script>
+                        <?php
+                            header("location:invoice.php?msg=$mobile");
+                        }
                     }
                   else
                     {

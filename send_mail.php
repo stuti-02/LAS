@@ -33,9 +33,9 @@ $mail->Body    = $bodyContent;
 
 if($mail->Send())
 {
-    header("location:fee_list.php?msg=success");
+    header("location:fee_status.php?msg=success");
 }
 else
 {
-    header("location:fee_list.php?msg=mailerror");
+    header("location:fee_status.php?msg=mailerror");
 }

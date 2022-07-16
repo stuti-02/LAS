@@ -78,7 +78,7 @@ $row_date = mysqli_fetch_array($res_date);
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <div class="card card-table">
                                 <div class="card-body">
                                         <div class="table-responsive">
@@ -87,12 +87,22 @@ $row_date = mysqli_fetch_array($res_date);
                                                     <tr>
                                                         <th>Expense For</th>
                                                         <th>Amount</th>
+                                                        <th>Description</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><input type="text" name="name" class="form-control" required></td>
+                                                    <td>
+                                                        <select name="name" class="form-control" required>
+                                                            <option value="Salary">Employee Salary</option>
+                                                            <option value="Electricity">Electricity Bill</option>
+                                                            <option value="Internet">Internet Bill</option>
+                                                            <option value="Newspaper">Newspaper</option>
+                                                            <option value="Other">Other Expenses</option>
+                                                        </select>
+                                                    </td>
                                                     <td><input type="text" name="amount" class="form-control" required></td>
+                                                    <td><textarea name="" id=""  class="form-control" style="resize:none;"></textarea></td>
                                                     </tr>
                                                 </tbody>
 

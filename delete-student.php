@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if($_SESSION['user']=='' or $_SESSION['user']==null){
@@ -12,13 +13,29 @@ $res= mysqli_query($db_con,$query);
 
 if(mysqli_num_rows($res)>0)
 {
-$row=mysqli_fetch_array($res);
-$dlt_query = "update tbl_student_details set status='F' where stu_id='$get_id'";
-mysqli_query($db_con,$dlt_query);
+?>
+    
+        <?php
+          $row=mysqli_fetch_array($res);
+          $dlt_query = "update tbl_student_details set status='F' where mobile='$row[mobile]'";
+          
+          if(mysqli_query($db_con,$dlt_query))
+          {
+            $dlt_fee_status = "update tbl_fee_status set stu_status='F' where fs_mobile='$row[mobile]'";
+            mysqli_query($db_con,$dlt_fee_status);
+            header("location:students.php?msg=1");
+          }
+          else
+          {
+            header("location:students.php?msg=2");
+          }
 
-$dlt_fee_status = "delete from tbl_fee_status where fs_mobile='$row[mobile]'";
-mysqli_query($db_con,$dlt_fee_status);
-header("location:students.php?msg=1");
+        ?>
+       
+<?php
+
+
+
 }
 else
 {
@@ -26,3 +43,5 @@ header("location:students.php?msg=2");
 }
 
 ?>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

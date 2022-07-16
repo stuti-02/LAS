@@ -26,11 +26,23 @@ $query_fee = "select * from tbl_student_details join tbl_fee on tbl_student_deta
 $res_fee = mysqli_query($db_con,$query_fee);
 
 
-$query_enroll = "select * from tbl_student_details order by stu_id desc limit 5";
-$res_enroll = mysqli_query($db_con,$query_enroll);
+
+$query_redz = "select * from tbl_fee_status as tf join tbl_student_details as tsd on tf.fs_mobile= tsd.mobile where tsd.status='T' order by tf.fs_month_end";
+$res_redz = mysqli_query($db_con,$query_redz);
+
+
+
+
+$q_curdate = "select CURRENT_DATE()";
+$res_curdate = mysqli_query($db_con, $q_curdate);
+$row_curdate = mysqli_fetch_array($res_curdate);
+
+
+// ===========================Graph 2 Queries============================================
 
 $q_date = "select distinct date from tbl_attendance order by date desc limit 17";
 $res_date = mysqli_query($db_con, $q_date);
+
 
 $res_date1 = mysqli_query($db_con, $q_date);
 $p_output = '';
@@ -50,10 +62,36 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
   $res_abs = mysqli_query($db_con, $q_absent);
   $row_abs = mysqli_fetch_array($res_abs);
   $ab_output .= $row_abs[0].",";
+
+}
+//===============================Graph1 Queries=========================
+
+$q_date_fc = "select distinct uploaded_date as uploaded_date from tbl_expense order by uploaded_date desc limit 7";
+$res_date_fc = mysqli_query($db_con, $q_date_fc);
+
+
+$res_collection = mysqli_query($db_con,$q_date_fc);
+$collection = '';
+while($row_collection = mysqli_fetch_array($res_collection))
+{
+$up_date=$row_collection["uploaded_date"];
+$q_collection = "select sum(amount) from tbl_fee where payment_date = '$up_date'";
+$res_col = mysqli_query($db_con,$q_collection);
+$row_col = mysqli_fetch_array($res_col);
+$collection .= $row_col[0].",";
 }
 
+$exp = '';
+$res_collection2 = mysqli_query($db_con,$q_date_fc);
+while($row_collection2 = mysqli_fetch_array($res_collection2))
+{
+$up_date2=$row_collection2["uploaded_date"];
+echo $q_exp = "select sum(expamt) from tbl_expense where uploaded_date = '$up_date2'";
+$res_exp = mysqli_query($db_con,$q_exp);
+$row_exp = mysqli_fetch_array($res_exp);
+$exp .= $row_exp[0].",";
+}
 
-    
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +129,10 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
       
     <?php
     include ("home_include/sidebar.php");
+    
     ?>
+
+
 
       <div class="page-wrapper">
         <div class="content container-fluid">
@@ -274,7 +315,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
             <div class="col-md-6 d-flex">
               <div class="card flex-fill">
                 <div class="card-header">
-                  <h5 class="card-title">Recent Enrolled Students</h5>
+                  <h5 class="card-title">Red Zone Students</h5>
                 </div>
                 <div class="card-body">
                     <table class="table table-hover table-center">
@@ -284,25 +325,35 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
                           <th class="text-center">Name</th>
                           <th class="text-center">Mobile</th>
                           <th class="text-center">Gender</th>
-                          <th class="text-center">Enrolled On</th>
+                          <th class="text-center">Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                          $a1=1;
-                          while($row_enroll=mysqli_fetch_array($res_enroll))
-                          {
-                        ?>
-                            <tr>
-                            <td class="text-center"><?php echo $a1; ?></td>
-                            <td class="text-center"><?php echo $row_enroll["name"]; ?></td>
-                            <td class="text-center"><?php echo $row_enroll["mobile"]; ?></td>
-                            <td class="text-center"><?php echo $row_enroll["gender"]; ?></td>
-                            <td class="text-center"><?php echo $row_enroll["enroll_date"]; ?></td>
-                          </tr>
-                        <?php
-                          $a1++;
-                          }
+                          
+                        //   while($row_redz=mysqli_fetch_array($res_redz))
+                        //   {
+                        //     $monthend= $row_redz["fs_month_end"];
+                        //     $mend=date('Y-m-d',(strtotime ( '-2 day' , strtotime ( $monthend) ) ));
+                        //     $a1=1;
+                        //     while($row_curdate[0]>$mend)
+                        //     {
+                        // ?>
+                        //     <tr>
+                        //     <td class="text-center"><?php echo $a1; ?></td>
+                        //     <td class="text-center"><?php echo $row_redz["name"]; ?></td>
+                        //     <td class="text-center"><?php echo $row_redz["mobile"]; ?></td>
+                        //     <td class="text-center"><?php echo $row_redz["gender"]; ?></td>
+                        //     <td class="text-center"><?php echo $row_redz["enroll_date"]; ?></td>
+                        //     <td class="text-center">
+                        //       <a href="send_mail.php?email=<?php echo $row_redz["email"]; ?>" class="btn btn-rounded btn-outline-danger">Send Mail</a>
+                        //     </td>
+                        //   </tr>
+                        // <?php
+                        //   $a1++;
+                        //     }
+                          
+                        //   }
                         ?>
                       </tbody>
                     </table>
@@ -336,7 +387,7 @@ while($row_row2 = mysqli_fetch_assoc($res_date2)){
 $(document).ready(function() {
 
 	// Area chart
-	
+
 	if ($('#apexcharts-area').length > 0) {
 	var options = {
 		chart: {
@@ -353,15 +404,28 @@ $(document).ready(function() {
 			curve: "smooth"
 		},
 		series: [{
-			name: "Teachers",
-			data: [45, 60, 75, 51, 42, 42, 30]
+			name: "Collection",
+			data: [
+      <?php
+      echo $collection;
+      ?>]
 		}, {
-			name: "Students",
+			name: "Expense",
 			color: '#FFBC53',
-			data: [24, 48, 56, 32, 34, 52, 25]
+			data: [
+        <?php
+          echo $exp;
+          ?>
+      ]
 		}],
 		xaxis: {
-			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+			categories: [
+        <?php
+        while($row_date_fc = mysqli_fetch_array($res_date_fc)){
+        echo "'".$row_date_fc['uploaded_date']."',";
+        }    
+        ?>
+      ],
 		}
 	}
 	var chart = new ApexCharts(
@@ -370,6 +434,7 @@ $(document).ready(function() {
 	);
 	chart.render();
 	}
+
 
 	// Bar chart
 	

@@ -20,11 +20,11 @@ $nextmend = date('Y-m-d', strtotime($nextmstart. ' +30 days'));
 $query = "select * from tbl_fee join tbl_student_details on tbl_fee.mobile=tbl_student_details.mobile where tbl_student_details.status='T' and tbl_fee.mobile='$mobile'";
 $res = mysqli_query($db_con,$query);
 
-$query_mail = "select email from tbl_student_details where mobile='$mobile' and status='T'";
+// $query_mail = "select email from tbl_student_details where mobile='$mobile' and status='T'";
 
-$res_mail = mysqli_query($db_con,$query_mail);
-$row_mail= mysqli_fetch_array($res_mail);
-$my_mail=$row_mail[0];
+// $res_mail = mysqli_query($db_con,$query_mail);
+// $row_mail= mysqli_fetch_array($res_mail);
+// $my_mail=$row_mail[0];
 
 
 if(mysqli_num_rows($res)>0)
@@ -33,43 +33,65 @@ if(mysqli_num_rows($res)>0)
 
     $query_in = "insert into tbl_fee (mobile,month_start,month_end,amount,pay_via,payment_date) values ('$mobile','$nextmstart','$nextmend','$amount','$pay_method','$date')";
 
-    $query_update = "update tbl_fee_status set fs_month_start='$nextmstart', fs_month_end='$nextmend', fs_amount='$amount' where fs_mobile='$mobile'";
+    $query_update = "update tbl_fee_status set fs_month_start='$nextmstart', fs_month_end='$nextmend', fs_amount='$amount', pay_via='$pay_method',payment_date='$date' where fs_mobile='$mobile'";
 
 
         if(mysqli_query($db_con,$query_in) and mysqli_query($db_con,$query_update))
         {
-                        
+            
+            // require 'PHPMailer/PHPMailerAutoload.php';
 
-            require 'PHPMailer/PHPMailerAutoload.php';
+            // $mail = new PHPMailer;
 
-            $mail = new PHPMailer;
+            // $mail->Host = 'smtpout.secureserver.net'; // Set mailer to use SMTP
+            // $mail->SMTPAuth = true;                            // Enable SMTP authentication
+            // $mail->Username = 'hr@softproindia.in';          // SMTP username
+            // $mail->Password = 'hr@spi123'; // SMTP password
+            // $mail->SMTPSecure = 'ssl';
+            // $mail->Port = 465;
+            // $mail->setFrom('hr@softproindia.in', 'Softpro India, Lucknow');
+            // $mail->addReplyTo('hr@softproindia.in', 'Softpro India, Lucknow');
+            // $mail->addAddress($my_mail);
+            // $mail->isHTML(true);  // Set email format to HTML
+            // $bodyContent ="Dear Student, <br/>
+            // Your Fee is Submitted Succesfully.<br/><br/>
 
-            $mail->Host = 'smtpout.secureserver.net'; // Set mailer to use SMTP
-            $mail->SMTPAuth = true;                            // Enable SMTP authentication
-            $mail->Username = 'hr@softproindia.in';          // SMTP username
-            $mail->Password = 'hr@spi123'; // SMTP password
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = 465;
-            $mail->setFrom('hr@softproindia.in', 'Softpro India, Lucknow');
-            $mail->addReplyTo('hr@softproindia.in', 'Softpro India, Lucknow');
-            $mail->addAddress($my_mail);
-            $mail->isHTML(true);  // Set email format to HTML
-            $bodyContent ="Dear Student, <br/>
-            Your Fee is Submitted Succesfully.<br/><br/>
+            // Thank You <br/>
+            // Softpro Library Hub";
 
-            Thank You <br/>
-            Softpro Library Hub";
+            // $mail->Subject = 'Fee Submitted Succesfully';
+            // $mail->Body    = $bodyContent;
 
-            $mail->Subject = 'Fee Submitted Succesfully';
-            $mail->Body    = $bodyContent;
+            // $mail->Send()
 
-            //if($mail->Send()){
-            header("location:invoice.php?msg=success");
-            //}
-            //else{
-                //header("location:add-fee.php?msg=mailerror");
-                
-           // }
+
+            //==========================SMS Integration==================
+            // Account details
+            $apiKey = urlencode('NzczNzZmMzM2ZjdhNmM3MDcxMzE0NjRiNzk2YzQxNDg=   ');
+            
+            // Message details
+            $numbers = array($mobile);
+            $sender = urlencode('SPI Library Hub');
+            $message = rawurlencode('Dear Student, Your Fee is Submitted Succesfully.');
+        
+            $numbers = implode(',', $numbers);
+        
+            // Prepare data for POST request
+            $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+        
+            // Send the POST request with cURL
+            $ch = curl_init('https://api.textlocal.in/send/');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            
+            // Process your response here
+            echo $response;
+            header("location:invoice.php?msg=$mobile");
+
+            
         }
         else
         {

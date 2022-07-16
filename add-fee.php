@@ -110,7 +110,7 @@ $row_date = mysqli_fetch_array($res_date);
                                                 <tr>
                                                     <td><input type="text" name="name" class="form-control" required></td>
                                                     <td><input type="text" name="mobile" class="form-control" required minlength="10" maxlength="10"></td>
-                                                    <td><input type="text" name="amount" class="form-control" value="<?php echo $row_fee["fee_amt"]; ?>" readonly style="background: transparent;"></td>
+                                                    <td><input type="text" name="amount" class="form-control" value="<?php echo $row_fee["fee_amt"]; ?>"  style="background: transparent;"></td>
                                                     <td>
                                                     <select name="pay_method" class="form-control">
                                                         <option value="cash">Cash</option>

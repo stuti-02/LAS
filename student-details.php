@@ -19,10 +19,10 @@ $row=mysqli_fetch_array($res);
 
 $get_phone=$row["mobile"];
 
-$query_fee = "select * from tbl_fee where mobile='$get_phone' order by month_start desc";
+$query_fee = "select * from tbl_fee where mobile='$get_phone' order by month_start desc limit 10";
 $res_fee = mysqli_query($db_con,$query_fee);
 
-$query_att = "select * from tbl_attendance where mobile='$get_phone'";
+$query_att = "select * from tbl_attendance where mobile='$get_phone' order by date desc limit 10";
 $res_att = mysqli_query($db_con,$query_att);
 ?>
 
@@ -73,12 +73,12 @@ $res_att = mysqli_query($db_con,$query_att);
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="about-info">
-                                    <h4>About Student</h4>
-                                    <div class="media mt-3 d-flex">
-                                        <img src="assets/stu_pic/<?php echo "$row[pic]"; ?>" class="me-3 flex-shrink-0" alt="...">
-                                        <div class="media-body flex-grow-1">
+                                    
+                                    <div class="media mt-3 d-flex ps-5">
+                                        <img src="assets/stu_pic/<?php echo "$row[pic]"; ?>" class="me-3 flex-shrink-0" alt="..." style="border-radius:50%;border:2px solid #333;">
+                                        <div class="media-body flex-grow-1 ps-5 mt-3">
                                             <ul>
                                                 <li>
                                                     <span class="title-span">Full Name : </span>
@@ -100,39 +100,45 @@ $res_att = mysqli_query($db_con,$query_att);
                                                     <span class="title-span">DOB : </span>
                                                     <span class="info-span"><?php echo "$row[dob]"; ?></span>
                                                 </li>
+                                                <li>
+                                                    <span class="title-span">Enroll Date : </span>
+                                                    <span class="info-span"><?php echo "$row[enroll_date]"; ?></span>
+                                                </li>
                                             </ul>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row follow-sec mt-5">
-                                        <div class="col-md-4 mb-3">
-                                            <div class="blue-box">
-                                                <h5>Enrollment Date</h5>
-                                                <p><?php echo "$row[enroll_date]"; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <div class="blue-box">
-                                                <h5>Permanent Address</h5>
-                                                <p><?php echo "$row[permanent_address]"; ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <div class="blue-box">
-                                                <h5>Present Address</h5>
-                                                <p><?php echo "$row[present_address]"; ?></p>
-                                            </div>
                                         </div>
                                     </div>
                                     
                                     
                                 </div>
                             </div>
+
+                            <div class="col-md-6 pt-2">
+                                    <div class="row follow-sec">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <div class="blue-box">
+                                                <h5>Permanent Address</h5>
+                                                <p><?php echo "$row[permanent_address]"; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                    <div class="row follow-sec mt-2">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <div class="blue-box">
+                                                <h5>Present Address</h5>
+                                                <p><?php echo "$row[present_address]"; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                            </div>
                         </div>
 
 
                         
-                        <div class="row mt-5">
+                        <div class="row mt-5 pt-5">
                             <div class="col-sm-8 table-responsive">
                                 <table class="table table-hover table-center mb-0 datatable border">
                                     <thead>

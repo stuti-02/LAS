@@ -5,7 +5,10 @@ if($_SESSION['user']=='' or $_SESSION['user']==null){
 }
 
 include ("connection.php");
+$query= "select * from tbl_expense WHERE uploaded_date= CURRENT_DATE()";
+$res= mysqli_query($db_con,$query);
 
+$sum=0;
 ?>
 
 
@@ -87,19 +90,39 @@ include ("connection.php");
 
             
             <form method="post" action="view-expense-code.php">
+
+               
+
+
                 <div class="row mt-5 text-center">
                     <div class="col-sm-12">
                         <div class="card card-table">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-center mb-0 datatable"  id="tbl-body">
-                                        <!-- <tr>
-                                            <th>S.No.</th>
-                                            <th>Expense Name</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
-                                        </tr>
-                                        -->
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Expense Name</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        
+                                            <?php
+                                            $a=1;
+                                            while($row=mysqli_fetch_array($res))
+                                            {
+                                                $sum+=$row["expamt"];
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $a; ?></td>
+                                                    <td><?php echo $row["expname"]; ?></td>
+                                                    <td><?php echo $row["expamt"]; ?></td>
+                                                    <td><?php echo $row["uploaded_date"]; ?></td>
+                                                </tr>
+                                            <?php
+                                            $a++;
+                                            }
+                                            ?>
                                     </table>
                                 </div>
                             </div>
@@ -107,6 +130,17 @@ include ("connection.php");
                     </div>
 
                 </div>
+
+
+                <div class="row">
+                    <div class="col-sm-9"></div>
+                    <div class="col-sm-3 btn btn-outline-primary text-center py-2">
+                        <span id="sum">
+                        Total : <?php echo $sum ?>
+                        </span>
+                    </div>
+                </div>
+
             </form>
             </div>
 
@@ -150,12 +184,11 @@ include ("connection.php");
                     },
                     success:function(data){
                         // handle the response
-                        let data1 = jQuery.parseJSON(data)
-                        console.log(data1)
-                        $("#tbl-body").html(data1[0]);
-                        // $("#sum").html(data1[1]);
-                        // $("#upi").html(data1[2]);
-                        // $("#cash").html(data1[3]);
+                        let res = JSON.parse(data);
+                        console.log(res)
+                        
+                        $("#tbl-body").html(res[0]);
+                        $("#sum").html("Total : "+res[1]);
                     }
 
                 })

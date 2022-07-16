@@ -70,10 +70,7 @@ $row_date = mysqli_fetch_array($res_date);
                                 <li class="active">Students</li>
                             </ul>
                         </div>
-                        <div class="col-auto text-end float-end ms-auto">
-                            <!-- <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a> -->
-                            <a href="add-student.php" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -126,7 +123,7 @@ $row_date = mysqli_fetch_array($res_date);
                                                     }
                                                     else
                                                     {
-                                                        ?>
+                                                        ?>  
                                                         <button type="button" class="btn btn-rounded btn-outline-success">Green Zone</button>
 
                                                         <?php
@@ -164,6 +161,40 @@ $row_date = mysqli_fetch_array($res_date);
     <script src="assets/plugins/select2/js/select2.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+  <?php
+  if(isset($_REQUEST["msg"]))
+  {
+    $msg=$_REQUEST["msg"];
+    if($msg=='success')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'success',
+              title: 'Success...',
+              text: 'Mail Sent Successfully!'
+              })
+          </script>
+    <?php
+    }
+    elseif($msg=='mailerror')
+    {
+    ?>
+          <script>
+              Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Try Again!'
+              })
+          </script>
+    <?php
+    }
+  }
+    ?>
+    
   </body>
 
  </html>

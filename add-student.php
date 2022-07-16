@@ -110,7 +110,7 @@ include("connection.php");
                       <div class="col-12 col-sm-6">
                         <div class="form-group">
                           <label>Student Image</label>
-                          <input type="file" class="form-control" name="pic" required/>
+                          <input type="file" class="form-control" name="pic"/>
                         </div>
                       </div>
 
@@ -137,7 +137,7 @@ include("connection.php");
                       <div class="col-12 col-sm-6">
                         <div class="form-group">
                           <label>Aadhar Card Image</label>
-                          <input type="file" class="form-control" name="aadhar_pic" required/>
+                          <input type="file" class="form-control" name="aadhar_pic"/>
                         </div>
                       </div>
 
@@ -175,7 +175,7 @@ include("connection.php");
                         <div class="form-group">
                           <label>Fee</label>
                           <div>
-                            <input type="text" class="form-control" name="fee" value="<?php echo $row["fee_amt"]; ?>" readonly style="background:transparent;"/>
+                            <input type="text" class="form-control" name="fee" value="<?php echo $row["fee_amt"]; ?>" style="background:transparent;"/>
                           </div>
                         </div>
                       </div>

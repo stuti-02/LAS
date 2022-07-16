@@ -105,7 +105,9 @@ $res=mysqli_query($db_con,$query);
                                                             <a href="update-student.php?get_id=<?php echo "$row[stu_id]"; ?>" class="btn btn-sm bg-success-light me-2">
                                                                 <i class="fas fa-pen"></i>
                                                             </a>
-                                                            <a href="delete-student.php?get_id=<?php echo "$row[stu_id]"; ?>" class="btn btn-sm bg-danger-light">
+
+                                                           
+                                                            <a href="#" onclick="confirm(this)" data-id="<?php echo $row['stu_id']; ?>" class="btn btn-sm bg-danger-light">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </div>
@@ -144,6 +146,32 @@ $res=mysqli_query($db_con,$query);
 
     <script src="assets/js/script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function confirm(el){
+
+            let id = $(el).data('id');
+         
+            // console.log(id);
+
+            Swal.fire({
+                    title: 'Do you want to delete this record?',
+                    showDenyButton: false,
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    denyButtonText: `Cancel`,
+                    }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location.href = `delete-student.php?get_id=${id}`;
+                    } else if (result.isDenied) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                    }
+                })
+        }
+
+   
+    </script>
 
     <?php
     if(isset($_REQUEST["msg"]))
