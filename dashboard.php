@@ -325,35 +325,35 @@ $exp .= $row_exp[0].",";
                           <th class="text-center">Name</th>
                           <th class="text-center">Mobile</th>
                           <th class="text-center">Gender</th>
+                          <th class="text-center">Fee Due Date</th>
                           <th class="text-center">Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                           
-                        //   while($row_redz=mysqli_fetch_array($res_redz))
-                        //   {
-                        //     $monthend= $row_redz["fs_month_end"];
-                        //     $mend=date('Y-m-d',(strtotime ( '-2 day' , strtotime ( $monthend) ) ));
-                        //     $a1=1;
-                        //     while($row_curdate[0]>$mend)
-                        //     {
-                        // ?>
-                        //     <tr>
-                        //     <td class="text-center"><?php echo $a1; ?></td>
-                        //     <td class="text-center"><?php echo $row_redz["name"]; ?></td>
-                        //     <td class="text-center"><?php echo $row_redz["mobile"]; ?></td>
-                        //     <td class="text-center"><?php echo $row_redz["gender"]; ?></td>
-                        //     <td class="text-center"><?php echo $row_redz["enroll_date"]; ?></td>
-                        //     <td class="text-center">
-                        //       <a href="send_mail.php?email=<?php echo $row_redz["email"]; ?>" class="btn btn-rounded btn-outline-danger">Send Mail</a>
-                        //     </td>
-                        //   </tr>
-                        // <?php
-                        //   $a1++;
-                        //     }
-                          
-                        //   }
+                          while($row_redz=mysqli_fetch_array($res_redz))
+                          {
+                            $monthend= $row_redz["fs_month_end"];
+                            $mend=date('Y-m-d',(strtotime ( '-2 day' , strtotime ( $monthend) ) ));
+                            $a1=1;
+                            if($row_curdate[0]>$mend)
+                            {
+                         ?>
+                            <tr>
+                             <td class="text-center"><?php echo $a1; ?></td>
+                             <td class="text-center"><?php echo $row_redz["name"]; ?></td>
+                             <td class="text-center"><?php echo $row_redz["mobile"]; ?></td>
+                             <td class="text-center"><?php echo $row_redz["gender"]; ?></td>
+                             <td class="text-center"><?php echo $row_redz["fs_month_end"]; ?></td>
+                             <td class="text-center">
+                               <a href="send_mail.php?email=<?php echo $row_redz["email"]; ?>" class="btn btn-rounded btn-outline-danger">Send Mail</a>
+                             </td>
+                           </tr>
+                         <?php                     
+                            }
+                            $a1++;
+                          }
                         ?>
                       </tbody>
                     </table>
